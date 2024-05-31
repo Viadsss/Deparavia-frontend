@@ -46,7 +46,7 @@ export default function EditProcedureModal({
             <FormControl isRequired>
               <Textarea
                 type="text"
-                maxLength={100}
+                maxLength={150}
                 value={input}
                 resize="vertical"
                 height="10rem"

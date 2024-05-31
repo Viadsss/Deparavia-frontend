@@ -61,12 +61,12 @@ function validatePatientInfo(formData) {
 function validateMedicalInfo(formData) {
   const errors = {};
 
-  if (formData.complaints.length > 100) {
-    errors.complaints = `Complaints must have 100 characters or less, current length: ${formData.complaints.length}`;
+  if (formData.complaints.length > 150) {
+    errors.complaints = `Complaints must have 150 characters or less, current length: ${formData.complaints.length}`;
   }
 
-  if (formData.medications.length > 100) {
-    errors.medications = `Complaints must have 100 characters or less, current length: ${formData.medications.length}`;
+  if (formData.medications.length > 150) {
+    errors.medications = `Complaints must have 150 characters or less, current length: ${formData.medications.length}`;
   }
 
   return errors;
