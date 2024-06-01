@@ -1,20 +1,40 @@
-import { Badge, Box, Button, Heading } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Button,
+  HStack,
+  Heading,
+  useDisclosure,
+} from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import PatientsTable from "./PatientsTable";
 import { IconLogout } from "@tabler/icons-react";
+import ChangePassModal from "./ChangePassModal";
 
 export default function DoctorDashboard({ doctorData, handleLogOut }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
-    <Box>
+    <>
       <Box>
-        <Heading as="h2">Welcome {doctorData.doctorName}!</Heading>
-        <Badge>{doctorData.doctorID}</Badge>
+        <Box>
+          <Heading as="h2">Welcome {doctorData.doctorName}!</Heading>
+          <Badge>{doctorData.doctorID}</Badge>
+        </Box>
+        <HStack>
+          <Button leftIcon={<IconLogout />} onClick={handleLogOut} my="16px">
+            Log out
+          </Button>
+          <Button onClick={onOpen}>Change Password</Button>
+        </HStack>
+        <PatientsTable doctorID={doctorData.doctorID} />
       </Box>
-      <Button leftIcon={<IconLogout />} onClick={handleLogOut} my="16px">
-        Log out
-      </Button>
-      <PatientsTable doctorID={doctorData.doctorID} />
-    </Box>
+      <ChangePassModal
+        doctorID={doctorData.doctorID}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
+    </>
   );
 }
 
