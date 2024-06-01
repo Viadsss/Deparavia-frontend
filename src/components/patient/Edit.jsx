@@ -24,17 +24,21 @@ import {
   Wrap,
   Box,
   Heading,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   initEditPatientForm,
   mockPatientDataEdit,
 } from "../../utils/formUtils";
 import { validatePatientEditInfo } from "../../utils/formErrorUtils";
+import ChangePassModal from "./ChangePassModal";
 
 export default function Edit({ patientData, setPatientData }) {
   const [formData, setFormData] = useState(patientData);
   const [errors, setErrors] = useState(initEditPatientForm);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
 
@@ -101,272 +105,282 @@ export default function Edit({ patientData, setPatientData }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ margin: "0" }}>
-      <Flex direction={{ base: "column", md: "row" }} gap="24px">
-        <Box flex="1">
-          <Heading fontSize={"x-large"}>Personal Information</Heading>
-          <FormControl isRequired isInvalid={!!errors.firstName}>
-            <FormLabel>First Name</FormLabel>
-            <Input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              isDisabled
-            />
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.firstName}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Last Name</FormLabel>
-            <Input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              isDisabled
-            />
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.lastName}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl isInvalid={!!errors.middleName}>
-            <FormLabel>Middle Name</FormLabel>
-            <Input
-              type="text"
-              name="middleName"
-              value={formData.middleName}
-              isDisabled
-            />
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.middleName}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Date of Birth</FormLabel>
-            <Input
-              type="date"
-              name="dateOfBirth"
-              value={formData.dateOfBirth}
-              isDisabled
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Sex</FormLabel>
-            <RadioGroup isDisabled name="sex" value={formData.sex}>
-              <Stack direction="row">
-                <Radio value="M">Male</Radio>
-                <Radio value="F">Female</Radio>
-              </Stack>
-            </RadioGroup>
-          </FormControl>
-          <FormControl isRequired>
-            <FormLabel>Height</FormLabel>
-            <NumberInput
-              min={0.01}
-              max={9.99}
-              precision={2}
-              step={0.01}
-              value={formData.height}
-              onChange={(valueString) =>
-                handleNumberChange("height", valueString)
-              }
-            >
-              <NumberInputField name="height" />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-            <FormHelperText>in meters (m)</FormHelperText>
-          </FormControl>
-
-          <FormControl isRequired>
-            <FormLabel>Weight</FormLabel>
-            <NumberInput
-              min={1}
-              max={999}
-              precision={0}
-              value={formData.weight}
-              onChange={(valueString) =>
-                handleNumberChange("weight", valueString)
-              }
-            >
-              <NumberInputField name="weight" />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-            <FormHelperText>in kilograms (kg)</FormHelperText>
-          </FormControl>
-
-          <FormControl isRequired>
-            <FormLabel>Marital Status</FormLabel>
-            <RadioGroup
-              name="maritalStatus"
-              value={formData.maritalStatus}
-              onChange={(value) => handleRadioChange("maritalStatus", value)}
-            >
-              <Wrap spacing="16px">
-                <Radio value="S">Single</Radio>
-                <Radio value="M">Married</Radio>
-                <Radio value="D">Divorced</Radio>
-                <Radio value="L">Legally Seperated</Radio>
-                <Radio value="W">Widowed</Radio>
-              </Wrap>
-            </RadioGroup>
-          </FormControl>
-
-          <FormControl isRequired isInvalid={!!errors.contactNumber}>
-            <FormLabel>Contact Number</FormLabel>
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">#</InputLeftElement>
+    <>
+      <Button onClick={onOpen} mb="24px">
+        Change Password
+      </Button>
+      <form onSubmit={handleSubmit} style={{ margin: "0" }}>
+        <Flex direction={{ base: "column", md: "row" }} gap="24px">
+          <Box flex="1">
+            <Heading fontSize={"x-large"}>Personal Information</Heading>
+            <FormControl isRequired isInvalid={!!errors.firstName}>
+              <FormLabel>First Name</FormLabel>
               <Input
-                type="tel"
-                name="contactNumber"
-                value={formData.contactNumber}
-                onChange={handleChange}
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                isDisabled
               />
-            </InputGroup>
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.contactNumber}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl isInvalid={!!errors.emailAddress}>
-            <FormLabel>Email Address</FormLabel>
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">@</InputLeftElement>
-              <Input
-                type="email"
-                name="emailAddress"
-                value={formData.emailAddress}
-                onChange={handleChange}
-              />
-            </InputGroup>
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.emailAddress}
-            </FormErrorMessage>
-          </FormControl>
-
-          <FormControl isRequired isInvalid={errors.streetAddress}>
-            <FormLabel>Street Address</FormLabel>
-            <Input
-              type="text"
-              name="streetAddress"
-              value={formData.streetAddress}
-              onChange={handleChange}
-            />
-            {!errors.streetAddress ? (
-              <FormHelperText>
-                Follow this format: (Street #, Street Name, Barangay)
-              </FormHelperText>
-            ) : (
               <FormErrorMessage>
                 <FormErrorIcon />
-                {errors.streetAddress}
+                {errors.firstName}
               </FormErrorMessage>
-            )}
-          </FormControl>
-
-          <FormControl isRequired isInvalid={!!errors.city}>
-            <FormLabel>City</FormLabel>
-            <Input
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-            />
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.city}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl isRequired isInvalid={!!errors.province}>
-            <FormLabel>Province</FormLabel>
-            <Input
-              type="text"
-              name="province"
-              value={formData.province}
-              onChange={handleChange}
-            />
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.province}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl isRequired isInvalid={!!errors.zipCode}>
-            <FormLabel>Zip Code</FormLabel>
-            <Input
-              type="text"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleChange}
-            />
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.zipCode}
-            </FormErrorMessage>
-          </FormControl>
-        </Box>
-
-        <Box flex="1">
-          <Heading fontSize={"x-large"}>Emergency Information</Heading>
-          <FormControl isRequired isInvalid={!!errors.emergencyName}>
-            <FormLabel>Name</FormLabel>
-            <Input
-              type="text"
-              name="emergencyName"
-              value={formData.emergencyName}
-              onChange={handleChange}
-            />
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.emergencyName}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl isRequired isInvalid={!!errors.emergencyRelationship}>
-            <FormLabel>Relationship</FormLabel>
-            <Input
-              type="text"
-              name="emergencyRelationship"
-              value={formData.emergencyRelationship}
-              onChange={handleChange}
-            />
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.emergencyRelationship}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl isRequired isInvalid={!!errors.emergencyContactNumber}>
-            <FormLabel>Contact Number</FormLabel>
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">#</InputLeftElement>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Last Name</FormLabel>
               <Input
-                type="tel"
-                name="emergencyContactNumber"
-                value={formData.emergencyContactNumber}
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                isDisabled
+              />
+              <FormErrorMessage>
+                <FormErrorIcon />
+                {errors.lastName}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={!!errors.middleName}>
+              <FormLabel>Middle Name</FormLabel>
+              <Input
+                type="text"
+                name="middleName"
+                value={formData.middleName}
+                isDisabled
+              />
+              <FormErrorMessage>
+                <FormErrorIcon />
+                {errors.middleName}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Date of Birth</FormLabel>
+              <Input
+                type="date"
+                name="dateOfBirth"
+                value={formData.dateOfBirth}
+                isDisabled
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Sex</FormLabel>
+              <RadioGroup isDisabled name="sex" value={formData.sex}>
+                <Stack direction="row">
+                  <Radio value="M">Male</Radio>
+                  <Radio value="F">Female</Radio>
+                </Stack>
+              </RadioGroup>
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Height</FormLabel>
+              <NumberInput
+                min={0.01}
+                max={9.99}
+                precision={2}
+                step={0.01}
+                value={formData.height}
+                onChange={(valueString) =>
+                  handleNumberChange("height", valueString)
+                }
+              >
+                <NumberInputField name="height" />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+              <FormHelperText>in meters (m)</FormHelperText>
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>Weight</FormLabel>
+              <NumberInput
+                min={1}
+                max={999}
+                precision={0}
+                value={formData.weight}
+                onChange={(valueString) =>
+                  handleNumberChange("weight", valueString)
+                }
+              >
+                <NumberInputField name="weight" />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+              <FormHelperText>in kilograms (kg)</FormHelperText>
+            </FormControl>
+
+            <FormControl isRequired>
+              <FormLabel>Marital Status</FormLabel>
+              <RadioGroup
+                name="maritalStatus"
+                value={formData.maritalStatus}
+                onChange={(value) => handleRadioChange("maritalStatus", value)}
+              >
+                <Wrap spacing="16px">
+                  <Radio value="S">Single</Radio>
+                  <Radio value="M">Married</Radio>
+                  <Radio value="D">Divorced</Radio>
+                  <Radio value="L">Legally Seperated</Radio>
+                  <Radio value="W">Widowed</Radio>
+                </Wrap>
+              </RadioGroup>
+            </FormControl>
+
+            <FormControl isRequired isInvalid={!!errors.contactNumber}>
+              <FormLabel>Contact Number</FormLabel>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">#</InputLeftElement>
+                <Input
+                  type="tel"
+                  name="contactNumber"
+                  value={formData.contactNumber}
+                  onChange={handleChange}
+                />
+              </InputGroup>
+              <FormErrorMessage>
+                <FormErrorIcon />
+                {errors.contactNumber}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={!!errors.emailAddress}>
+              <FormLabel>Email Address</FormLabel>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">@</InputLeftElement>
+                <Input
+                  type="email"
+                  name="emailAddress"
+                  value={formData.emailAddress}
+                  onChange={handleChange}
+                />
+              </InputGroup>
+              <FormErrorMessage>
+                <FormErrorIcon />
+                {errors.emailAddress}
+              </FormErrorMessage>
+            </FormControl>
+
+            <FormControl isRequired isInvalid={errors.streetAddress}>
+              <FormLabel>Street Address</FormLabel>
+              <Input
+                type="text"
+                name="streetAddress"
+                value={formData.streetAddress}
                 onChange={handleChange}
               />
-            </InputGroup>
-            <FormErrorMessage>
-              <FormErrorIcon />
-              {errors.emergencyContactNumber}
-            </FormErrorMessage>
-          </FormControl>
-          <HStack marginTop={"16px"}>
-            <Button onClick={handleRestore}>Restore</Button>
-            <Button type="submit" isLoading={isLoading}>
-              Save Changes
-            </Button>
-          </HStack>
-        </Box>
-      </Flex>
-    </form>
+              {!errors.streetAddress ? (
+                <FormHelperText>
+                  Follow this format: (Street #, Street Name, Barangay)
+                </FormHelperText>
+              ) : (
+                <FormErrorMessage>
+                  <FormErrorIcon />
+                  {errors.streetAddress}
+                </FormErrorMessage>
+              )}
+            </FormControl>
+
+            <FormControl isRequired isInvalid={!!errors.city}>
+              <FormLabel>City</FormLabel>
+              <Input
+                type="text"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>
+                <FormErrorIcon />
+                {errors.city}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isRequired isInvalid={!!errors.province}>
+              <FormLabel>Province</FormLabel>
+              <Input
+                type="text"
+                name="province"
+                value={formData.province}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>
+                <FormErrorIcon />
+                {errors.province}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isRequired isInvalid={!!errors.zipCode}>
+              <FormLabel>Zip Code</FormLabel>
+              <Input
+                type="text"
+                name="zipCode"
+                value={formData.zipCode}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>
+                <FormErrorIcon />
+                {errors.zipCode}
+              </FormErrorMessage>
+            </FormControl>
+          </Box>
+
+          <Box flex="1">
+            <Heading fontSize={"x-large"}>Emergency Information</Heading>
+            <FormControl isRequired isInvalid={!!errors.emergencyName}>
+              <FormLabel>Name</FormLabel>
+              <Input
+                type="text"
+                name="emergencyName"
+                value={formData.emergencyName}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>
+                <FormErrorIcon />
+                {errors.emergencyName}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isRequired isInvalid={!!errors.emergencyRelationship}>
+              <FormLabel>Relationship</FormLabel>
+              <Input
+                type="text"
+                name="emergencyRelationship"
+                value={formData.emergencyRelationship}
+                onChange={handleChange}
+              />
+              <FormErrorMessage>
+                <FormErrorIcon />
+                {errors.emergencyRelationship}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl isRequired isInvalid={!!errors.emergencyContactNumber}>
+              <FormLabel>Contact Number</FormLabel>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">#</InputLeftElement>
+                <Input
+                  type="tel"
+                  name="emergencyContactNumber"
+                  value={formData.emergencyContactNumber}
+                  onChange={handleChange}
+                />
+              </InputGroup>
+              <FormErrorMessage>
+                <FormErrorIcon />
+                {errors.emergencyContactNumber}
+              </FormErrorMessage>
+            </FormControl>
+            <HStack marginTop={"16px"}>
+              <Button onClick={handleRestore}>Restore</Button>
+              <Button type="submit" isLoading={isLoading}>
+                Save Changes
+              </Button>
+            </HStack>
+          </Box>
+        </Flex>
+      </form>
+      <ChangePassModal
+        patientID={patientData.patientID}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
+    </>
   );
 }
 
