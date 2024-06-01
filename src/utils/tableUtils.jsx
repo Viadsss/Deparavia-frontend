@@ -748,7 +748,7 @@ const patientColumns = [
   },
   {
     name: "Date of Birth",
-    selector: (row) => row.dateOfBirth,
+    selector: (row) => format(row.dateOfBirth, "yyyy-MM-dd"),
     sortable: true,
   },
   {
