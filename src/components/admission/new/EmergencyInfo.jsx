@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  initEmergencyInfo,
-  initNewAdmissionForm,
-} from "../../../utils/formUtils";
+import { initEmergencyInfo } from "../../../utils/formUtils";
 import {
   Button,
   FormControl,
@@ -25,9 +22,7 @@ export default function EmergencyInfo({
   setFormData,
   handleBackStep,
   handleNextStep,
-  setNewUserData,
 }) {
-  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState(initEmergencyInfo);
 
   const handleChange = (e) => {
@@ -36,50 +31,16 @@ export default function EmergencyInfo({
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const simulateFetchGet = async (formData) => {
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    const mockData = {
-      message: "patient creaated successfully",
-      patientID: "PAT-JV-001",
-      firstName: "John Paul",
-      lastName: "Viado",
-      middleName: "Padua",
-      contents: formData,
-    };
-
-    return mockData;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
     const newErrors = validateEmergencyInfo(emergencyFormData);
     const hasError = Object.keys(newErrors).length > 0;
     setErrors(newErrors);
-
-    if (hasError) {
-      setIsLoading(false);
-      return;
-    }
+    if (hasError) return;
 
     const updatedFormData = { ...formData, ...emergencyFormData };
     setFormData(updatedFormData);
-    console.log(emergencyFormData);
-
-    try {
-      // TODO: POST (Insert Admisison to the Admission + Patient Database)
-      // and get the Patient Details for the ID
-      const response = await simulateFetchGet(updatedFormData);
-      console.log(response);
-      setFormData(initNewAdmissionForm);
-      setNewUserData(response);
-      handleNextStep();
-    } finally {
-      setIsLoading(false);
-    }
+    handleNextStep();
   };
 
   return (
@@ -140,9 +101,7 @@ export default function EmergencyInfo({
         </FormControl>
         <HStack mt="12px">
           <Button onClick={handleBackStep}>Back</Button>
-          <Button isLoading={isLoading} type="submit">
-            Submit
-          </Button>
+          <Button type="submit">Next</Button>
         </HStack>
       </form>
     </>
@@ -154,7 +113,6 @@ EmergencyInfo.propTypes = {
   setEmergencyFormData: PropTypes.func.isRequired,
   formData: PropTypes.object.isRequired,
   setFormData: PropTypes.func.isRequired,
-  setNewUserData: PropTypes.func.isRequired,
   handleBackStep: PropTypes.func.isRequired,
   handleNextStep: PropTypes.func.isRequired,
 };
