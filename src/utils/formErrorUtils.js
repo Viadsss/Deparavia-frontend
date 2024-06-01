@@ -1,4 +1,5 @@
 const alphabetRegex = /^[a-zA-Z\s]+$/;
+const nameRegex = /^[a-zA-Z\s.,]+$/;
 const numberRegex = /^\d+$/;
 
 // Admission Page
@@ -75,8 +76,9 @@ function validateMedicalInfo(formData) {
 function validateEmergencyInfo(formData) {
   const errors = {};
 
-  if (!formData.emergencyName.match(alphabetRegex)) {
-    errors.emergencyName = "Only alphabetic characters allowed";
+  if (!formData.emergencyName.match(nameRegex)) {
+    errors.emergencyName =
+      "Only alphabetic characters, period (.), and comma (,) are allowed";
   } else if (formData.emergencyName.length > 60) {
     errors.emergencyName = `Name must have 60 characters or less, current length: ${formData.emergencyName.length}`;
   }
@@ -100,8 +102,9 @@ function validateEmergencyInfo(formData) {
 function validateDoctorInfo(formData) {
   const errors = {};
 
-  if (!formData.doctorName.match(alphabetRegex)) {
-    errors.doctorName = "Only alphabetic characters allowed";
+  if (!formData.doctorName.match(nameRegex)) {
+    errors.doctorName =
+      "Only alphabetic characters, period (.), and comma (,) are allowed";
   } else if (formData.doctorName.length > 60) {
     errors.doctorName = `Name must have 60 characters or less, current length: ${formData.doctorName.length}`;
   }
@@ -113,8 +116,9 @@ function validateDoctorInfo(formData) {
 function validateVisitorInfo(formData) {
   const errors = {};
 
-  if (!formData.visitorName.match(alphabetRegex)) {
-    errors.visitorName = "Only alphabetic characters allowed";
+  if (!formData.visitorName.match(nameRegex)) {
+    errors.visitorName =
+      "Only alphabetic characters, period (.), and comma (,) are allowed";
   } else if (formData.visitorName.length > 60) {
     errors.visitorName = `Name must have 60 characters or less, current length: ${formData.visitorName.length}`;
   }
