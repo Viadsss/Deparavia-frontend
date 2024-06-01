@@ -1,11 +1,12 @@
 import DataTable from "react-data-table-component";
-import { patientColumns, patientRows } from "../../../utils/tableUtils";
+import { patientColumns } from "../../../utils/tableUtils";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import PatientRowDetails from "./PatientRowDetails";
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { filterPatientData } from "../../../utils/funcUtils";
 import { IconSearch } from "@tabler/icons-react";
+import axios from "axios";
 
 export default function PatientRecord({ theme }) {
   const [isPending, setIsPending] = useState(true);
@@ -19,7 +20,9 @@ export default function PatientRecord({ theme }) {
 
   const getPatientData = async () => {
     try {
-      const response = await simulateGetPatients();
+      const response = await axios.get(
+        "http://localhost:8080/api/admin/patients"
+      );
       const data = response.data;
       setPatientData(data);
       setFilteredData(data);
@@ -69,16 +72,6 @@ export default function PatientRecord({ theme }) {
     />
   );
 }
-
-const simulateGetPatients = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: patientRows,
-    message: "get admissions successfully",
-  };
-  return mockData;
-};
 
 PatientRecord.propTypes = {
   theme: PropTypes.string.isRequired,
