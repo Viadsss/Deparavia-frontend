@@ -89,6 +89,7 @@ const initAdminLoginForm = {
 
 const initDoctorForm = {
   doctorName: "",
+  doctorPassword: "",
   startTime: "",
   endTime: "",
 };

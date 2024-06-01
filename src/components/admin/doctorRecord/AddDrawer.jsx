@@ -11,18 +11,23 @@ import {
   FormErrorIcon,
   FormErrorMessage,
   FormLabel,
+  IconButton,
   Input,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { initDoctorForm } from "../../../utils/formUtils";
 import { doctorRowsInsert } from "../../../utils/tableUtils";
 import PropTypes from "prop-types";
 import { validateDoctorInfo } from "../../../utils/formErrorUtils";
+import { IconEye, IconEyeClosed } from "@tabler/icons-react";
 
 export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
   const [formData, setFormData] = useState(initDoctorForm);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState(initDoctorForm);
+  const [show, setShow] = useState(false);
   const firstField = useRef();
 
   const handleChange = (e) => {
@@ -71,7 +76,7 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
           <DrawerHeader borderBottomWidth="1px">Add New Doctor</DrawerHeader>
 
           <DrawerBody>
-            <FormControl isRequired isInvalid={!!errors.doctorName}>
+            <FormControl isRequired isInvalid={!!errors.doctorName} mt="12px">
               <FormLabel>Doctor Name</FormLabel>
               <Input
                 type="text"
@@ -84,8 +89,26 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
                 <FormErrorIcon />
                 {errors.doctorName}
               </FormErrorMessage>
+              <FormControl isRequired mt="12px">
+                <FormLabel>Password</FormLabel>
+                <InputGroup>
+                  <Input
+                    type={show ? "text" : "password"}
+                    name="password"
+                    maxLength={20}
+                    value={formData.password}
+                    onChange={handleChange}
+                  />
+                  <InputRightElement>
+                    <IconButton
+                      icon={show ? <IconEye /> : <IconEyeClosed />}
+                      onClick={() => setShow(!show)}
+                    />
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
             </FormControl>
-            <FormControl isRequired>
+            <FormControl isRequired mt="12px">
               <FormLabel>Start Time</FormLabel>
               <Input
                 type="time"
@@ -94,7 +117,7 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
                 onChange={handleChange}
               />
             </FormControl>
-            <FormControl isRequired>
+            <FormControl isRequired mt="12px">
               <FormLabel>End time</FormLabel>
               <Input
                 type="time"
