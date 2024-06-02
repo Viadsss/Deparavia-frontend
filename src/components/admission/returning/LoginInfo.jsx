@@ -40,7 +40,6 @@ export default function LoginInfo({
     setFormData((prevData) => ({ ...prevData, ...loginFormData }));
     console.log(loginFormData);
     try {
-      // TODO: POST (Check Pass and ID to the Database) and check if successful
       await axios.post(
         "http://localhost:8080/api/admission/returning/login",
         loginFormData
