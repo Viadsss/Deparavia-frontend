@@ -14,7 +14,7 @@ import {
 import { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { initDoctorShiftForm } from "../../../utils/formUtils";
-import { doctorRowsUpdate } from "../../../utils/tableUtils";
+import axios from "axios";
 
 export default function EditDrawer({
   data,
@@ -32,17 +32,13 @@ export default function EditDrawer({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data.doctorID);
-    const newFormData = {
-      startTime: formData.startTime.concat(":00"),
-      endTime: formData.endTime.concat(":00"),
-    };
-    console.log("New Form Data", newFormData);
-    // TODO: PUT Request to update doctor Table to change the shift
-    // and it returns the updated doctor Table
-    // smth like put: (url, id) then replace the fetch to the simulation
+
+    await axios.put(
+      `http://localhost:8080/api/admin/doctor/${data.doctorID}`,
+      formData
+    );
     setFormData(initDoctorShiftForm);
-    handleDoctorUpdate(updateDoctorSimulate, toastDetails);
+    handleDoctorUpdate(toastDetails);
     onClose();
   };
 
@@ -64,8 +60,8 @@ export default function EditDrawer({
               <FormLabel>Start Time</FormLabel>
               <Input
                 type="time"
-                name="startTime"
-                value={formData.startTime}
+                name="doctorStartTime"
+                value={formData.doctorStartTime}
                 onChange={handleChange}
                 ref={firstField}
               />
@@ -74,8 +70,8 @@ export default function EditDrawer({
               <FormLabel>End time</FormLabel>
               <Input
                 type="time"
-                name="endTime"
-                value={formData.endTime}
+                name="doctorEndTime"
+                value={formData.doctorEndTime}
                 onChange={handleChange}
               />
             </FormControl>
@@ -100,16 +96,6 @@ EditDrawer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   handleDoctorUpdate: PropTypes.func.isRequired,
-};
-
-const updateDoctorSimulate = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: doctorRowsUpdate,
-    message: "get admissions successfully",
-  };
-  return mockData;
 };
 
 const toastDetails = {

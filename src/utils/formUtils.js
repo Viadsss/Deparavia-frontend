@@ -90,13 +90,13 @@ const initAdminLoginForm = {
 const initDoctorForm = {
   doctorName: "",
   doctorPassword: "",
-  startTime: "",
-  endTime: "",
+  doctorStartTime: "",
+  doctorEndTime: "",
 };
 
 const initDoctorShiftForm = {
-  startTime: "",
-  endTime: "",
+  doctorStartTime: "",
+  doctorEndTime: "",
 };
 
 const initVisitorForm = {

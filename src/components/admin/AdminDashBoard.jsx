@@ -11,13 +11,13 @@ import {
 import PropTypes from "prop-types";
 import { useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { doctorRows } from "../../utils/tableUtils";
 import AdmissionRecord from "./admissionRecord/AdmissionRecord";
 import DoctorRecord from "./doctorRecord/DoctorRecord";
 import PatientRecord from "./patientRecord/PatientRecord";
 import { filterDoctorData } from "../../utils/funcUtils";
 import VisitorRecord from "./visitorRecord/VisitorRecord";
 import { IconLogout } from "@tabler/icons-react";
+import axios from "axios";
 
 export default function AdminDashBoard({ setIsLogin }) {
   const [doctorData, setDoctorData] = useState([]);
@@ -40,22 +40,25 @@ export default function AdminDashBoard({ setIsLogin }) {
 
   const getDoctorData = async () => {
     try {
-      const response = await simulateGetDoctors();
+      const response = await axios.get(
+        "http://localhost:8080/api/admin/doctors"
+      );
       const data = response.data;
       setDoctorData(data);
       setDoctorFilteredData(data);
     } catch (err) {
-      console.log(err);
+      console.err(err);
     } finally {
       setIsPendingDoctor(false);
     }
   };
 
-  const handleDoctorUpdate = async (simulate, toastDetails) => {
+  const handleDoctorUpdate = async (toastDetails) => {
     const fetchDoctorTable = async () => {
-      const response = await simulate();
+      const response = await axios.get(
+        "http://localhost:8080/api/admin/doctors"
+      );
       const data = response.data;
-      console.log(data);
       setDoctorData(data);
       setDoctorFilteredData(data);
       setDoctorSearchTerm("");
@@ -126,17 +129,4 @@ export default function AdminDashBoard({ setIsLogin }) {
 
 AdminDashBoard.propTypes = {
   setIsLogin: PropTypes.func.isRequired,
-};
-
-// Simulating API functions
-
-const simulateGetDoctors = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: doctorRows,
-    message: "get doctors successfully",
-  };
-
-  return mockData;
 };

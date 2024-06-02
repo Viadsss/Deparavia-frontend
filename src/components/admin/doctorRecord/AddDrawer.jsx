@@ -18,10 +18,10 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { initDoctorForm } from "../../../utils/formUtils";
-import { doctorRowsInsert } from "../../../utils/tableUtils";
 import PropTypes from "prop-types";
 import { validateDoctorInfo } from "../../../utils/formErrorUtils";
 import { IconEye, IconEyeClosed } from "@tabler/icons-react";
+import axios from "axios";
 
 export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
   const [formData, setFormData] = useState(initDoctorForm);
@@ -39,7 +39,6 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log(formData);
 
     const newErrors = validateDoctorInfo(formData);
     const hasError = Object.keys(newErrors).length > 0;
@@ -52,10 +51,8 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
 
     setFormData(initDoctorForm);
     try {
-      // TODO: POST Request to insert doctor Table
-      // and it returns the updated doctor Table
-      // smth like post: (url) then replace the fetch to the simulation
-      handleDoctorUpdate(addDoctorSimulate, toastDetails);
+      await axios.post("http://localhost:8080/api/admin/doctor", formData);
+      handleDoctorUpdate(toastDetails);
       onClose();
     } finally {
       setIsLoading(false);
@@ -94,9 +91,9 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
                 <InputGroup>
                   <Input
                     type={show ? "text" : "password"}
-                    name="password"
+                    name="doctorPassword"
                     maxLength={20}
-                    value={formData.password}
+                    value={formData.doctorPassword}
                     onChange={handleChange}
                   />
                   <InputRightElement>
@@ -112,8 +109,8 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
               <FormLabel>Start Time</FormLabel>
               <Input
                 type="time"
-                name="startTime"
-                value={formData.startTime}
+                name="doctorStartTime"
+                value={formData.doctorStartTime}
                 onChange={handleChange}
               />
             </FormControl>
@@ -121,8 +118,8 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
               <FormLabel>End time</FormLabel>
               <Input
                 type="time"
-                name="endTime"
-                value={formData.endTime}
+                name="doctorEndTime"
+                value={formData.doctorEndime}
                 onChange={handleChange}
               />
             </FormControl>
@@ -142,15 +139,15 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
   );
 }
 
-const addDoctorSimulate = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+// const addDoctorSimulate = async () => {
+//   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  const mockData = {
-    data: doctorRowsInsert,
-    message: "get admissions successfully",
-  };
-  return mockData;
-};
+//   const mockData = {
+//     data: doctorRowsInsert,
+//     message: "get admissions successfully",
+//   };
+//   return mockData;
+// };
 
 const toastDetails = {
   success: {
