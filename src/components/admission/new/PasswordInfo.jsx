@@ -13,6 +13,7 @@ import { IconEye, IconEyeClosed } from "@tabler/icons-react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { initNewAdmissionForm } from "../../../utils/formUtils";
+import axios from "axios";
 
 export default function PasswordInfo({
   passwordFormData,
@@ -31,22 +32,6 @@ export default function PasswordInfo({
     setPasswordFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const simulateFetchGet = async (formData) => {
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    const mockData = {
-      message: "patient creaated successfully",
-      patientID: "PAT-JV-001",
-      firstName: "John Paul",
-      lastName: "Viado",
-      middleName: "Padua",
-      contents: formData,
-    };
-
-    return mockData;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -58,10 +43,14 @@ export default function PasswordInfo({
     try {
       // TODO: POST (Insert Admisison to the Admission + Patient Database)
       // and get the Patient Details for the ID
-      const response = await simulateFetchGet(updatedFormData);
+      const response = await axios.post(
+        "http://localhost:8080/api/admission/new",
+        updatedFormData
+      );
+      const data = response.data;
       console.log(response);
       setFormData(initNewAdmissionForm);
-      setNewUserData(response);
+      setNewUserData(data);
       handleNextStep();
     } finally {
       setIsLoading(false);
