@@ -38,7 +38,6 @@ export default function LoginInfo({
     e.preventDefault();
     setIsLoading(true);
     setFormData((prevData) => ({ ...prevData, ...loginFormData }));
-    console.log(loginFormData);
     try {
       await axios.post(
         "http://localhost:8080/api/admission/returning/login",
