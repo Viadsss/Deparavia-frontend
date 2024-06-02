@@ -35,7 +35,12 @@ export default function TableRowDetails({ doctorID, data, handleDataUpdate }) {
         <HStack mb="8px">
           <Button onClick={onOpenProcedure}>Update Procedure</Button>
           <Button onClick={onOpenDiagnosis}>Update Diagnosis</Button>
-          <Button onClick={onOpenDischarge}>Discharge</Button>
+          <Button
+            onClick={onOpenDischarge}
+            isDisabled={!data.procedure || !data.diagnosis}
+          >
+            Discharge
+          </Button>
         </HStack>
         <Badge>{data.admissionID}</Badge>
         <Text>

@@ -9,10 +9,11 @@ import {
   Button,
   FormControl,
   Textarea,
+  HStack,
 } from "@chakra-ui/react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { doctorDashboardRowsUpdateDiagnosis } from "../../utils/tableUtils";
 
 export default function EditDiagnosisModal({
   admissionID,
@@ -30,8 +31,21 @@ export default function EditDiagnosisModal({
     console.log(doctorID);
     console.log(admissionID);
 
-    handleDataUpdate(updateTableSimulate, toastDetails);
-    onClose();
+    const request = {
+      admissionID: admissionID,
+      diagnosis: input,
+    };
+
+    try {
+      await axios.put(
+        `http://localhost:8080/api/doctor/${doctorID}/diagnosis`,
+        request
+      );
+      handleDataUpdate(toastDetails);
+      onClose();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -55,8 +69,10 @@ export default function EditDiagnosisModal({
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
-            <Button type="submit">Update</Button>
+            <HStack>
+              <Button onClick={onClose}>Close</Button>
+              <Button type="submit">Update</Button>
+            </HStack>
           </ModalFooter>
         </form>
       </ModalContent>
@@ -71,16 +87,6 @@ EditDiagnosisModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   handleDataUpdate: PropTypes.func.isRequired,
-};
-
-const updateTableSimulate = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: doctorDashboardRowsUpdateDiagnosis,
-    message: "get admissions successfully",
-  };
-  return mockData;
 };
 
 const toastDetails = {

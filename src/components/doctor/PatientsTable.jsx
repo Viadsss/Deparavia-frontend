@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  doctorDashboardColumns,
-  doctorDashboardRows,
-} from "../../utils/tableUtils";
+import { doctorDashboardColumns } from "../../utils/tableUtils";
 import PropTypes from "prop-types";
 import DataTable from "react-data-table-component";
 import {
@@ -16,6 +13,7 @@ import {
 import TableRowDetails from "./TableRowDetails";
 import { filterDoctorTableData } from "../../utils/funcUtils";
 import { IconSearch } from "@tabler/icons-react";
+import axios from "axios";
 
 export default function PatientsTable({ doctorID }) {
   const [isPending, setIsPending] = useState(true);
@@ -29,26 +27,30 @@ export default function PatientsTable({ doctorID }) {
   const toast = useToast();
 
   useEffect(() => {
+    const getTableData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/doctor/${doctorID}`
+        );
+        const data = response.data;
+        console.log(data);
+        setTableData(data);
+        setFilteredData(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsPending(false);
+      }
+    };
+
     getTableData();
-  }, []);
+  }, [doctorID]);
 
-  const getTableData = async () => {
-    try {
-      const response = await simulateGetPatients();
-      const data = response.data;
-      console.log(data);
-      setTableData(data);
-      setFilteredData(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsPending(false);
-    }
-  };
-
-  const handleDataUpdate = async (simulate, toastDetails) => {
+  const handleDataUpdate = async (toastDetails) => {
     const fetchTableData = async () => {
-      const response = await simulate();
+      const response = await axios.get(
+        `http://localhost:8080/api/doctor/${doctorID}`
+      );
       const data = response.data;
       setTableData(data);
       setFilteredData(data);
@@ -118,15 +120,4 @@ export default function PatientsTable({ doctorID }) {
 
 PatientsTable.propTypes = {
   doctorID: PropTypes.string.isRequired,
-};
-
-const simulateGetPatients = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: doctorDashboardRows,
-    message: "Get Patients for this doctor successfully",
-  };
-
-  return mockData;
 };

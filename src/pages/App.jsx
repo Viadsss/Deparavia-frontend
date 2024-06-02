@@ -22,7 +22,7 @@ export default function App() {
   const { toggleColorMode } = useColorMode();
   const mainBg = useColorModeValue("gray.50", "gray.900");
   const headerFooterBg = useColorModeValue("white", "gray.900");
-  const headerBorder = useColorModeValue("gray.200", "gray.800");
+  const headerBorder = useColorModeValue("gray.200", "gray.700");
   const icon = useColorModeValue(<IconMoonStars />, <IconSun />);
   const isMobile = useBreakpointValue({ base: true, md: false });
   const { isOpen, onOpen, onClose } = useDisclosure();

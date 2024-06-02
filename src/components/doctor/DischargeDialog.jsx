@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import PropTypes from "prop-types";
-import { doctorDashboardRowsUpdateDischarge } from "../../utils/tableUtils";
+import axios from "axios";
 
 export default function DischargeDialog({
   admissionID,
@@ -23,8 +23,21 @@ export default function DischargeDialog({
   const handleDischarge = async () => {
     console.log(admissionID);
     console.log(doctorID);
-    handleDataUpdate(updateTableSimulate, toastDetails);
-    onClose();
+
+    const request = {
+      admissionID: admissionID,
+    };
+
+    try {
+      await axios.put(
+        `http://localhost:8080/api/doctor/${doctorID}/discharge`,
+        request
+      );
+      handleDataUpdate(toastDetails);
+      onClose();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -62,16 +75,6 @@ DischargeDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   handleDataUpdate: PropTypes.func.isRequired,
-};
-
-const updateTableSimulate = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: doctorDashboardRowsUpdateDischarge,
-    message: "get admissions successfully",
-  };
-  return mockData;
 };
 
 const toastDetails = {

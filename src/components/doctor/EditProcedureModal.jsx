@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { doctorDashboardRowsUpdateProcedure } from "../../utils/tableUtils";
+import axios from "axios";
 
 export default function EditProcedureModal({
   admissionID,
@@ -27,12 +27,22 @@ export default function EditProcedureModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(input);
-    console.log(doctorID);
-    console.log(admissionID);
 
-    handleDataUpdate(updateTableSimulate, toastDetails);
-    onClose();
+    const request = {
+      admissionID: admissionID,
+      procedure: input,
+    };
+
+    try {
+      await axios.put(
+        `http://localhost:8080/api/doctor/${doctorID}/procedure`,
+        request
+      );
+      handleDataUpdate(toastDetails);
+      onClose();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -74,16 +84,6 @@ EditProcedureModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   handleDataUpdate: PropTypes.func.isRequired,
-};
-
-const updateTableSimulate = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: doctorDashboardRowsUpdateProcedure,
-    message: "get admissions successfully",
-  };
-  return mockData;
 };
 
 const toastDetails = {

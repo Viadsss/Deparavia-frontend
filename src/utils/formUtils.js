@@ -67,7 +67,7 @@ const initPatientLoginInfo = {
 
 const initDoctorLoginInfo = {
   doctorID: "",
-  password: "",
+  doctorPassword: "",
 };
 
 const newAdmissionSteps = [
