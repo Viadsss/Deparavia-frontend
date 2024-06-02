@@ -94,7 +94,9 @@ export default function AdmissionRowDetails({
           </Text>
         </Box>
         <HStack mt="8px">
-          <IconButton onClick={handleEdit} icon={<IconEdit />} />
+          {!data.dischargeDate && (
+            <IconButton onClick={handleEdit} icon={<IconEdit />} />
+          )}
           <IconButton onClick={handleDelete} icon={<IconTrashX />} />
         </HStack>
       </Box>
