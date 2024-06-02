@@ -27,10 +27,7 @@ export default function LoginInfo({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setLoginFormData((prev) => ({
-      ...prev,
-      [name]: name === "patientID" ? value.toUpperCase() : value,
-    }));
+    setLoginFormData((prev) => ({ ...prev, [name]: value }));
     setError("");
   };
 
