@@ -51,7 +51,7 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
 
     setFormData(initDoctorForm);
     try {
-      await axios.post("http://localhost:8080/api/admin/doctor", formData);
+      await axios.post("http://localhost:8080/api/admin/doctors", formData);
       handleDoctorUpdate(toastDetails);
       onClose();
     } finally {

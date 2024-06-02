@@ -34,7 +34,7 @@ export default function EditDrawer({
     e.preventDefault();
 
     await axios.put(
-      `http://localhost:8080/api/admin/doctor/${data.doctorID}`,
+      `http://localhost:8080/api/admin/doctors/${data.doctorID}`,
       formData
     );
     setFormData(initDoctorShiftForm);

@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import PropTypes from "prop-types";
-import { mockRows3 } from "../../../utils/tableUtils";
+import axios from "axios";
 
 export default function DeleteDialog({
   data,
@@ -22,7 +22,10 @@ export default function DeleteDialog({
   const handleDelete = async () => {
     onClose();
     console.log(data.admissionID);
-    handleDataUpdate(deleteAdmission, toastDetails);
+    await axios.delete(
+      `http://localhost:8080/api/admin/admissions/${data.admissionID}`
+    );
+    handleDataUpdate(toastDetails);
   };
 
   return (
@@ -59,16 +62,6 @@ DeleteDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   handleDataUpdate: PropTypes.func.isRequired,
-};
-
-const deleteAdmission = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: mockRows3,
-    message: "get admissions successfully",
-  };
-  return mockData;
 };
 
 const toastDetails = {

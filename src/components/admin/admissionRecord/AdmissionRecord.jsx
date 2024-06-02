@@ -6,7 +6,7 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
-import { admissionColumns, admissionRows } from "../../../utils/tableUtils";
+import { admissionColumns } from "../../../utils/tableUtils";
 import PropTypes from "prop-types";
 import AdmissionRowDetails from "./AdmissionRowDetails";
 import { filterAdmissionData } from "../../../utils/funcUtils";

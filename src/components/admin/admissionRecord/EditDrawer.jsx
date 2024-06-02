@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { mockRows2 } from "../../../utils/tableUtils";
+import axios from "axios";
 
 export default function EditDrawer({
   data,
@@ -27,11 +27,14 @@ export default function EditDrawer({
     e.preventDefault();
     onClose();
     console.log(selectedDoctor);
-    if (selectedDoctor != data.doctorID && selectedDoctor != "")
-      // TODO: PUT Request to update admission Table to add doctorID to that admission
-      // and it returns the updated admission Table
-      // smth like put: (url, id) then replace the fetch to the simulation
-      handleDataUpdate(addDoctorToPatient, toastDetails);
+    console.log(data.admissionID);
+    if (selectedDoctor != data.doctorID && selectedDoctor != "") {
+      await axios.put(
+        `http://localhost:8080/api/admin/admissions/${data.admissionID}`,
+        { doctorID: selectedDoctor }
+      );
+      handleDataUpdate(toastDetails);
+    }
   };
 
   return (
@@ -82,16 +85,6 @@ EditDrawer.propTypes = {
   onClose: PropTypes.func.isRequired,
   doctorData: PropTypes.array.isRequired,
   handleDataUpdate: PropTypes.func.isRequired,
-};
-
-const addDoctorToPatient = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: mockRows2,
-    message: "get admissions successfully",
-  };
-  return mockData;
 };
 
 const toastDetails = {
