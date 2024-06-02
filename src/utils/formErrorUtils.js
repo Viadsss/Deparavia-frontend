@@ -18,10 +18,12 @@ function validatePatientInfo(formData) {
     errors.lastName = `Last name must have 30 characters or less, current length: ${formData.lastName.length}`;
   }
 
-  if (!formData.middleName.match(alphabetRegex)) {
-    errors.middleName = "Only alphabetic characters allowed";
-  } else if (formData.middleName.length > 30) {
-    errors.middleName = `Middle name must have 30 characters or less, current length: ${formData.middleName.length}`;
+  if (formData.middleName) {
+    if (!formData.middleName.match(alphabetRegex)) {
+      errors.middleName = "Only alphabetic characters allowed";
+    } else if (formData.middleName.length > 30) {
+      errors.middleName = `Middle name must have 30 characters or less, current length: ${formData.middleName.length}`;
+    }
   }
 
   if (!formData.contactNumber.match(numberRegex)) {

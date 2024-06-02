@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { Input, useToast, InputGroup, InputLeftElement} from "@chakra-ui/react";
+import {
+  Input,
+  useToast,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
 import { admissionColumns, admissionRows } from "../../../utils/tableUtils";
 import PropTypes from "prop-types";
 import AdmissionRowDetails from "./AdmissionRowDetails";
 import { filterAdmissionData } from "../../../utils/funcUtils";
 import { IconSearch } from "@tabler/icons-react";
-
+import axios from "axios";
 
 export default function AdmissionRecord({ theme, doctorData }) {
   const [isPending, setIsPending] = useState(true);
@@ -22,7 +27,9 @@ export default function AdmissionRecord({ theme, doctorData }) {
 
   const getAdmissionData = async () => {
     try {
-      const response = await simulateGetAdmissions();
+      const response = await axios.get(
+        "http://localhost:8080/api/admin/admissions"
+      );
       const data = response.data;
       setAdmissionData(data);
       setFilteredData(data);
@@ -33,9 +40,11 @@ export default function AdmissionRecord({ theme, doctorData }) {
     }
   };
 
-  const handleDataUpdate = async (simulate, toastDetails) => {
+  const handleDataUpdate = async (toastDetails) => {
     const fetchAdmissionsData = async () => {
-      const response = await simulate();
+      const response = await axios.get(
+        "http://localhost:8080/api/admin/admissions"
+      );
       const data = response.data;
       setAdmissionData(data);
       setFilteredData(data);
@@ -99,14 +108,4 @@ export default function AdmissionRecord({ theme, doctorData }) {
 AdmissionRecord.propTypes = {
   theme: PropTypes.string.isRequired,
   doctorData: PropTypes.array.isRequired,
-};
-
-const simulateGetAdmissions = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: admissionRows,
-    message: "get admissions successfully",
-  };
-  return mockData;
 };
