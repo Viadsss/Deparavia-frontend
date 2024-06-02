@@ -56,7 +56,6 @@ export default function MedicalInfo({
     setFormData(updatedFormData);
 
     try {
-      // TODO: POST to admission
       await axios.post(
         "http://localhost:8080/api/admission/returning",
         updatedFormData
