@@ -7,6 +7,10 @@ import {
   HStack,
   Heading,
   Textarea,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  ScaleFade,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { useState } from "react";
@@ -15,6 +19,7 @@ import {
   initReturningAdmissionForm,
 } from "../../../utils/formUtils";
 import { validateMedicalInfo } from "../../../utils/formErrorUtils";
+import axios from "axios";
 
 export default function MedicalInfo({
   medicalFormData,
@@ -26,25 +31,12 @@ export default function MedicalInfo({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState(initMedicalInfo);
+  const [formErrMessage, setFormErrMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setMedicalFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: false }));
-  };
-
-  const simulateFetchGet = async (formData) => {
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    const mockData = {
-      message: "admitted successfully",
-      patientID: formData.patientID,
-      complaints: formData.complaints,
-      medications: formData.medications,
-    };
-
-    return mockData;
   };
 
   const handleSubmit = async (e) => {
@@ -65,10 +57,15 @@ export default function MedicalInfo({
 
     try {
       // TODO: POST to admission
-      const response = await simulateFetchGet(updatedFormData);
-      console.log("Response", response);
+      await axios.post(
+        "http://localhost:8080/api/admission/returning",
+        updatedFormData
+      );
       setFormData(initReturningAdmissionForm);
       handleNextStep();
+    } catch (err) {
+      const message = err.response.data;
+      setFormErrMessage(message);
     } finally {
       setIsLoading(false);
     }
@@ -110,6 +107,17 @@ export default function MedicalInfo({
             </FormErrorMessage>
           </FormControl>
         </FormControl>
+        {formErrMessage && (
+          <ScaleFade initialScale={0.1} in={Boolean(formErrMessage)}>
+            <Alert status="error" mt="12px">
+              <AlertIcon />
+              <AlertTitle>
+                Multiple admissions in the same day is not allowed currently!
+              </AlertTitle>
+            </Alert>
+          </ScaleFade>
+        )}
+
         <HStack mt="12px">
           <Button onClick={handleBackStep}>Back</Button>
           <Button isLoading={isLoading} type="submit">
