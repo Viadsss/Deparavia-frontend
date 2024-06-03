@@ -1,6 +1,7 @@
 import {
   Alert,
   AlertIcon,
+  AlertTitle,
   Box,
   Button,
   FormControl,
@@ -17,6 +18,7 @@ import { useState } from "react";
 import { initVisitorForm } from "../utils/formUtils";
 import { validateVisitorInfo } from "../utils/formErrorUtils";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Visitor() {
   const [formData, setFormData] = useState(initVisitorForm);
@@ -31,12 +33,9 @@ export default function Visitor() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: name === "patientID" ? value.toUpperCase() : value,
-    }));
-
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
+    setIdError(null);
   };
 
   const handleSubmit = async (e) => {
@@ -56,20 +55,29 @@ export default function Visitor() {
     handleDoctorInsert();
   };
 
-  const doctorInsert = async () => {
-    const response = await simulatePostVisitor();
-    const data = response.message;
-    console.log(data);
-    setFormData(initVisitorForm);
-    navigate("/");
-  };
-
   const handleDoctorInsert = async () => {
     try {
-      toast.promise(doctorInsert(), toastDetails);
+      const response = await axios.post(
+        "http://localhost:8080/api/visitor",
+        formData
+      );
+      const data = response.data;
+      toast({
+        title: data.title,
+        description: data.description,
+        status: "success",
+      });
+      setFormData(initVisitorForm);
+      navigate("/");
     } catch (err) {
-      console.error("Error doctor insert:", err);
-      setIdError("The Patient ID does not exist");
+      const data = err.response.data;
+      console.log(data);
+      toast({
+        title: data.title,
+        description: data.description,
+        status: "error",
+      });
+      setIdError(data);
     } finally {
       setIsLoading(false);
     }
@@ -156,7 +164,7 @@ export default function Visitor() {
         {idError && (
           <Alert status="error" mt="12px" rounded="md">
             <AlertIcon />
-            {idError}
+            <AlertTitle>{idError.title}</AlertTitle>
           </Alert>
         )}
         <Button isLoading={isLoading} type="submit" mt="12px">
@@ -166,27 +174,3 @@ export default function Visitor() {
     </Box>
   );
 }
-
-const simulatePostVisitor = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    message: "get patient data successfully",
-  };
-  return mockData;
-};
-
-const toastDetails = {
-  success: {
-    title: "Visitor Added",
-    description: "The visitor has been successfully added.",
-  },
-  error: {
-    title: "Failed to Add Visitor",
-    description: "There was an error adding the visitor. Please try again.",
-  },
-  loading: {
-    title: "Adding Visitor",
-    description: "Please wait while the visitor is being added.",
-  },
-};
