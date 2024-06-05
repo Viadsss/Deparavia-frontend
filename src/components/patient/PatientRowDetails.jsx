@@ -9,10 +9,8 @@ export default function PatientRowDetails({ data }) {
         <strong>Admission ID:</strong> {data.admissionID}
       </Text>
       <Text>
-        <strong>Doctor Name:</strong> {data.doctorName}
-      </Text>
-      <Text>
-        <strong>complaints:</strong> {data.doctorName}
+        <strong>Doctor Name:</strong>{" "}
+        {data.doctorName ? data.doctorName : "No in-charge doctor"}
       </Text>
       <Box>
         <strong>Complaints:</strong>
@@ -44,7 +42,9 @@ export default function PatientRowDetails({ data }) {
       </Text>
       <Text>
         <strong>Discharge Date:</strong>{" "}
-        {format(data.dischargeDate, "MMMM d, yyyy")}
+        {data.dischargeDate
+          ? format(data.dischargeDate, "MMMM d, yyyy")
+          : "Not yet discharged"}
       </Text>
     </Box>
   );

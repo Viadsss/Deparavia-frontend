@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  patientDashBoardAdmissionsColumns,
-  patientDashBoardAdmissionsRows,
-} from "../../utils/tableUtils";
+import { patientDashBoardAdmissionsColumns } from "../../utils/tableUtils";
 import { filterPatientAdmissionsData } from "../../utils/funcUtils";
 import PropTypes from "prop-types";
 import DataTable from "react-data-table-component";
@@ -14,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import PatientRowDetails from "./PatientRowDetails";
 import { IconSearch } from "@tabler/icons-react";
+import axios from "axios";
 
 export default function AdmissionsTable({ patientID }) {
   const [isPending, setIsPending] = useState(true);
@@ -29,8 +27,9 @@ export default function AdmissionsTable({ patientID }) {
 
   const getTableData = async (id) => {
     try {
-      console.log(id);
-      const response = await simulateGetAdmissions();
+      const response = await axios.get(
+        `http://localhost:8080/api/patient/${id}/admissions`
+      );
       const data = response.data;
       console.log(data);
       setTableData(data);
@@ -85,15 +84,4 @@ export default function AdmissionsTable({ patientID }) {
 
 AdmissionsTable.propTypes = {
   patientID: PropTypes.string.isRequired,
-};
-
-const simulateGetAdmissions = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: patientDashBoardAdmissionsRows,
-    message: "Get Patients for this doctor successfully",
-  };
-
-  return mockData;
 };
