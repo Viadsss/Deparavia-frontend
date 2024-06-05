@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  patientDashBoardVisitorColumns,
-  patientDashBoardVisitorRows,
-} from "../../utils/tableUtils";
+import { patientDashBoardVisitorColumns } from "../../utils/tableUtils";
 import { filterPatientVisitorsData } from "../../utils/funcUtils";
 import PropTypes from "prop-types";
 import DataTable from "react-data-table-component";
@@ -14,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { IconSearch } from "@tabler/icons-react";
 import VisitorRowDetails from "./VisitorRowDetails";
+import axios from "axios";
 
 export default function VisitorsTable({ patientID }) {
   const [isPending, setIsPending] = useState(true);
@@ -29,8 +27,9 @@ export default function VisitorsTable({ patientID }) {
 
   const getTableData = async (id) => {
     try {
-      console.log(id);
-      const response = await simulateGetVisitors();
+      const response = await axios.get(
+        `http://localhost:8080/api/patient/${id}/visitors`
+      );
       const data = response.data;
       console.log(data);
       setTableData(data);
@@ -85,15 +84,4 @@ export default function VisitorsTable({ patientID }) {
 
 VisitorsTable.propTypes = {
   patientID: PropTypes.string.isRequired,
-};
-
-const simulateGetVisitors = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: patientDashBoardVisitorRows,
-    message: "Get Patients for this doctor successfully",
-  };
-
-  return mockData;
 };
