@@ -145,7 +145,7 @@ export default function ChangePassModal({ patientID, isOpen, onClose }) {
 
 ChangePassModal.propTypes = {
   patientID: PropTypes.string.isRequired,
-  isOpen: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
