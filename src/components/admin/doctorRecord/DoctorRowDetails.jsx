@@ -9,7 +9,6 @@ export default function DoctorRowDetails({ data, handleDoctorUpdate }) {
 
   const handleEdit = () => {
     onOpen();
-    console.log(data);
   };
 
   return (

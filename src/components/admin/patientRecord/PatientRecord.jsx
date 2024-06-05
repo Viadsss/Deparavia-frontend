@@ -27,7 +27,7 @@ export default function PatientRecord({ theme }) {
       setPatientData(data);
       setFilteredData(data);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsPending(false);
     }

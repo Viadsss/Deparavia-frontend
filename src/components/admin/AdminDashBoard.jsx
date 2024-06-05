@@ -47,7 +47,7 @@ export default function AdminDashBoard({ setIsLogin }) {
       setDoctorData(data);
       setDoctorFilteredData(data);
     } catch (err) {
-      console.err(err);
+      console.error(err);
     } finally {
       setIsPendingDoctor(false);
     }

@@ -39,7 +39,6 @@ export default function AdminLoginForm({ setIsLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     if (formData.username === USERNAME && formData.password === PASSWORD) {
       setIsLogin(true);
     } else {

@@ -36,8 +36,6 @@ export default function DoctorLoginForm({ setDoctorData }) {
     e.preventDefault();
     setIsLoading(true);
 
-    console.log(formData);
-
     try {
       const response = await axios.post(
         "http://localhost:8080/api/doctor/login",

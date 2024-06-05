@@ -31,7 +31,6 @@ export default function VisitorsTable({ patientID }) {
         `http://localhost:8080/api/patient/${id}/visitors`
       );
       const data = response.data;
-      console.log(data);
       setTableData(data);
       setFilteredData(data);
     } catch (err) {

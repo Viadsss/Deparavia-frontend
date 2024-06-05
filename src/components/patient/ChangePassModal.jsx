@@ -59,9 +59,6 @@ export default function ChangePassModal({ patientID, isOpen, onClose }) {
 
     setIsLoading(true);
     try {
-      console.log(patientID);
-      console.log(originalPassInput);
-      console.log(newPassInput);
       const request = {
         originalPassword: originalPassInput,
         newPassword: newPassInput,

@@ -21,9 +21,6 @@ export default function DischargeDialog({
   const cancelRef = useRef();
 
   const handleDischarge = async () => {
-    console.log(admissionID);
-    console.log(doctorID);
-
     const request = {
       admissionID: admissionID,
     };

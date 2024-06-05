@@ -31,7 +31,6 @@ export default function AdmissionsTable({ patientID }) {
         `http://localhost:8080/api/patient/${id}/admissions`
       );
       const data = response.data;
-      console.log(data);
       setTableData(data);
       setFilteredData(data);
     } catch (err) {

@@ -38,7 +38,6 @@ export default function PasswordInfo({
 
     const updatedFormData = { ...formData, ...passwordFormData };
     setFormData(updatedFormData);
-    console.log(passwordFormData);
 
     try {
       // TODO: POST (Insert Admisison to the Admission + Patient Database)
@@ -48,7 +47,6 @@ export default function PasswordInfo({
         updatedFormData
       );
       const data = response.data;
-      console.log(response);
       setFormData(initNewAdmissionForm);
       setNewUserData(data);
       handleNextStep();

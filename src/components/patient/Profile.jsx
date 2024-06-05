@@ -4,8 +4,6 @@ import { getMaritalDesc } from "../../utils/funcUtils";
 import { format } from "date-fns";
 
 export default function Profile({ data }) {
-  console.log(data);
-
   return (
     <Box>
       <Box>

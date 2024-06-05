@@ -27,7 +27,7 @@ export default function VisitorRecord({ theme }) {
       setVisitorData(data);
       setFilteredData(data);
     } catch (err) {
-      console.log(err.response.data);
+      console.error(err.response.data);
     } finally {
       setIsPending(false);
     }

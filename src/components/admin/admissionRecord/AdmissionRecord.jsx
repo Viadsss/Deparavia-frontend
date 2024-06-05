@@ -34,7 +34,7 @@ export default function AdmissionRecord({ theme, doctorData }) {
       setAdmissionData(data);
       setFilteredData(data);
     } catch (err) {
-      console.log(err);
+      console.err(err);
     } finally {
       setIsPending(false);
     }

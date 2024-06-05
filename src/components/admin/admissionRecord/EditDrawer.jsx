@@ -26,8 +26,6 @@ export default function EditDrawer({
   const handleSubmit = async (e) => {
     e.preventDefault();
     onClose();
-    console.log(selectedDoctor);
-    console.log(data.admissionID);
     if (selectedDoctor != data.doctorID && selectedDoctor != "") {
       await axios.put(
         `http://localhost:8080/api/admin/admissions/${data.admissionID}`,

@@ -27,9 +27,6 @@ export default function EditDiagnosisModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(input);
-    console.log(doctorID);
-    console.log(admissionID);
 
     const request = {
       admissionID: admissionID,

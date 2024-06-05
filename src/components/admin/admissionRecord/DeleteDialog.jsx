@@ -21,7 +21,6 @@ export default function DeleteDialog({
 
   const handleDelete = async () => {
     onClose();
-    console.log(data.admissionID);
     await axios.delete(
       `http://localhost:8080/api/admin/admissions/${data.admissionID}`
     );

@@ -80,7 +80,6 @@ export default function Edit({ patientData, setPatientData }) {
         formData
       );
       const data = response.data;
-      console.log(data);
       setPatientData(data);
       setFormData(data);
       toast({

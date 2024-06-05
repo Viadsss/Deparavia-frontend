@@ -30,12 +30,10 @@ export default function AdmissionRowDetails({
 
   const handleEdit = () => {
     onOpenEdit();
-    console.log(data);
   };
 
   const handleDelete = () => {
     onOpenDelete();
-    console.log(data);
   };
 
   return (

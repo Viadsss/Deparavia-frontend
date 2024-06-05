@@ -41,7 +41,6 @@ export default function Visitor() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    console.log(formData);
 
     const newErrors = validateVisitorInfo(formData);
     const hasError = Object.keys(newErrors).length > 0;
@@ -71,7 +70,6 @@ export default function Visitor() {
       navigate("/");
     } catch (err) {
       const data = err.response.data;
-      console.log(data);
       toast({
         title: data.title,
         description: data.description,

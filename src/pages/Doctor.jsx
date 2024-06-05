@@ -6,7 +6,6 @@ export default function Doctor() {
   const [doctorData, setDoctorData] = useState(null);
 
   const handleLogOut = () => {
-    console.log(doctorData);
     setDoctorData(null);
   };
 

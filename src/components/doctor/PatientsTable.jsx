@@ -33,7 +33,6 @@ export default function PatientsTable({ doctorID }) {
           `http://localhost:8080/api/doctor/${doctorID}`
         );
         const data = response.data;
-        console.log(data);
         setTableData(data);
         setFilteredData(data);
       } catch (err) {
