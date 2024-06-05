@@ -26,12 +26,10 @@ import {
   Heading,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  initEditPatientForm,
-  mockPatientDataEdit,
-} from "../../utils/formUtils";
+import { initEditPatientForm } from "../../utils/formUtils";
 import { validatePatientEditInfo } from "../../utils/formErrorUtils";
 import ChangePassModal from "./ChangePassModal";
+import axios from "axios";
 
 export default function Edit({ patientData, setPatientData }) {
   const [formData, setFormData] = useState(patientData);
@@ -44,6 +42,7 @@ export default function Edit({ patientData, setPatientData }) {
 
   const handleRestore = () => {
     setFormData(patientData);
+    setErrors(initEditPatientForm);
   };
 
   const handleChange = (e) => {
@@ -75,11 +74,13 @@ export default function Edit({ patientData, setPatientData }) {
       return;
     }
 
-    console.log(formData);
     try {
-      // TODO: PUT (Edit Patient Info and return the new patient Info)
-      const response = await simulatePutPatientDataEdit();
+      const response = await axios.put(
+        `http://localhost:8080/api/patient/${patientData.patientID}/details`,
+        formData
+      );
       const data = response.data;
+      console.log(data);
       setPatientData(data);
       setFormData(data);
       toast({
@@ -387,14 +388,4 @@ export default function Edit({ patientData, setPatientData }) {
 Edit.propTypes = {
   patientData: PropTypes.object.isRequired,
   setPatientData: PropTypes.func.isRequired,
-};
-
-const simulatePutPatientDataEdit = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: mockPatientDataEdit,
-    message: "get patient data successfully",
-  };
-  return mockData;
 };

@@ -143,6 +143,12 @@ function validateVisitorInfo(formData) {
 function validatePatientEditInfo(formData) {
   const errors = {};
 
+  if (!formData.contactNumber.match(numberRegex)) {
+    errors.contactNumber = "Only numbers are allowed";
+  } else if (formData.contactNumber.length != 11) {
+    errors.contactNumber = "Contact number must be 11 digits long";
+  }
+
   if (formData.emailAddress.length > 100) {
     errors.emailAddress = `Email address must have 100 characters or less, current length: ${formData.emailAddress.length}`;
   }
@@ -163,9 +169,9 @@ function validatePatientEditInfo(formData) {
     errors.province = `Province must have 30 characters or less, current length: ${formData.province.length}`;
   }
 
-  if (!formData.zipCode.match(numberRegex)) {
+  if (!formData.zipCode.toString().match(numberRegex)) {
     errors.zipCode = "Only numbers are allowed";
-  } else if (formData.zipCode.length != 4) {
+  } else if (formData.zipCode.toString().length != 4) {
     errors.zipCode = "Zip code must be 4 digits long";
   }
 

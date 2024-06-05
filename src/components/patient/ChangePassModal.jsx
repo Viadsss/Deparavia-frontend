@@ -21,6 +21,7 @@ import {
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { IconEye, IconEyeClosed } from "@tabler/icons-react";
+import axios from "axios";
 
 export default function ChangePassModal({ patientID, isOpen, onClose }) {
   const [originalPassInput, setOriginalPassInput] = useState("");
@@ -56,23 +57,24 @@ export default function ChangePassModal({ patientID, isOpen, onClose }) {
       return;
     }
 
-    if (originalPassInput !== newPassInput) {
-      setError("Passwords do not match");
-      return;
-    }
-
     setIsLoading(true);
     try {
       console.log(patientID);
       console.log(originalPassInput);
       console.log(newPassInput);
+      const request = {
+        originalPassword: originalPassInput,
+        newPassword: newPassInput,
+      };
       // TODO: Change/Update the Password of the Patient using PUT
-      const response = await updatePassSimulate();
-      const message = response.message;
+      const response = await axios.put(
+        `http://localhost:8080/api/patient/${patientID}/password`,
+        request
+      );
+      const message = response.data;
       toast({ title: message, status: "success" });
       onClose();
     } catch (err) {
-      console.log(err);
       setError("Incorrect original password");
     } finally {
       setIsLoading(false);
@@ -147,13 +149,4 @@ ChangePassModal.propTypes = {
   patientID: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-};
-
-const updatePassSimulate = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    message: "Password sucessfully changed",
-  };
-  return mockData;
 };
