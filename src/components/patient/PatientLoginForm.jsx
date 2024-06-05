@@ -4,6 +4,8 @@ import {
   Box,
   Button,
   FormControl,
+  FormErrorIcon,
+  FormErrorMessage,
   FormLabel,
   Heading,
   IconButton,
@@ -12,32 +14,37 @@ import {
   InputRightElement,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { initPatientLoginInfo, mockPatientData } from "../../utils/formUtils";
+import { initPatientLoginInfo } from "../../utils/formUtils";
 import { IconEye, IconEyeClosed } from "@tabler/icons-react";
+import axios from "axios";
 
 export default function PatientLoginForm({ setPatientData }) {
   const [formData, setFormData] = useState(initPatientLoginInfo);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
   const [show, setShow] = useState(false);
   const bgCard = useColorModeValue("white", "gray.800");
   const borderCard = useColorModeValue("gray.200", "gray.600");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === "patientID" ? value.toUpperCase() : value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrorMsg(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      // TODO: POST (Check Pass and ID to the Database) and get the Data of Patient
-      const response = await simulateGetPatientData();
+      const response = await axios.post(
+        "http://localhost:8080/api/patient/login",
+        formData
+      );
       const data = response.data;
       setPatientData(data);
+    } catch (err) {
+      const messaage = err.response.data;
+      setErrorMsg(messaage);
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +66,7 @@ export default function PatientLoginForm({ setPatientData }) {
         maxWidth="900px"
         mx="auto"
       >
-        <FormControl isRequired>
+        <FormControl isRequired isInvalid={!!errorMsg}>
           <FormLabel>Patient ID</FormLabel>
           <Input
             type="text"
@@ -70,8 +77,6 @@ export default function PatientLoginForm({ setPatientData }) {
             onChange={handleChange}
             mb="12px"
           />
-        </FormControl>
-        <FormControl isRequired>
           <FormLabel>Password</FormLabel>
           <InputGroup>
             <Input
@@ -89,6 +94,10 @@ export default function PatientLoginForm({ setPatientData }) {
               />
             </InputRightElement>
           </InputGroup>
+          <FormErrorMessage>
+            <FormErrorIcon />
+            {errorMsg}
+          </FormErrorMessage>
         </FormControl>
         <Box textAlign="center">
           <Button isLoading={isLoading} loadingText="Logging in" type="submit">
@@ -102,14 +111,4 @@ export default function PatientLoginForm({ setPatientData }) {
 
 PatientLoginForm.propTypes = {
   setPatientData: PropTypes.func.isRequired,
-};
-
-const simulateGetPatientData = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: mockPatientData,
-    message: "get patient data successfully",
-  };
-  return mockData;
 };
