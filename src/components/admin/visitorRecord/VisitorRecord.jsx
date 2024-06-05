@@ -1,11 +1,12 @@
 import DataTable from "react-data-table-component";
-import { visitorColumns, visitorRows } from "../../../utils/tableUtils";
+import { visitorColumns } from "../../../utils/tableUtils";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { InputGroup, InputLeftElement, Input } from "@chakra-ui/react";
 import { filterVisitorData } from "../../../utils/funcUtils";
 import VisitorRowDetails from "./visitorRowDetails";
 import { IconSearch } from "@tabler/icons-react";
+import axios from "axios";
 
 export default function VisitorRecord({ theme }) {
   const [isPending, setIsPending] = useState(true);
@@ -19,12 +20,14 @@ export default function VisitorRecord({ theme }) {
 
   const getVisitorData = async () => {
     try {
-      const response = await simulateGetVisitors();
+      const response = await axios.get(
+        "http://localhost:8080/api/admin/visitors"
+      );
       const data = response.data;
       setVisitorData(data);
       setFilteredData(data);
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data);
     } finally {
       setIsPending(false);
     }
@@ -69,16 +72,6 @@ export default function VisitorRecord({ theme }) {
     />
   );
 }
-
-const simulateGetVisitors = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  const mockData = {
-    data: visitorRows,
-    message: "get admissions successfully",
-  };
-  return mockData;
-};
 
 VisitorRecord.propTypes = {
   theme: PropTypes.string.isRequired,

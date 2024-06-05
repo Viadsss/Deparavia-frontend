@@ -824,7 +824,7 @@ const visitorColumns = [
   },
   {
     name: "Date of Visit",
-    selector: (row) => row.visitorDate,
+    selector: (row) => format(row.visitorDate, "yyyy-MM-dd"),
     sortable: true,
   },
   {
