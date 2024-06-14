@@ -3,7 +3,7 @@ import { patientColumns } from "../../../utils/tableUtils";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import PatientRowDetails from "./PatientRowDetails";
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
 import { filterPatientData } from "../../../utils/funcUtils";
 import { IconSearch } from "@tabler/icons-react";
 import axios from "axios";
@@ -13,9 +13,11 @@ export default function PatientRecord({ theme }) {
   const [patientData, setPatientData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     getPatientData();
+    getPatientTotal();
   }, []);
 
   const getPatientData = async () => {
@@ -30,6 +32,19 @@ export default function PatientRecord({ theme }) {
       console.error(err);
     } finally {
       setIsPending(false);
+    }
+  };
+
+  const getPatientTotal = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/admin/patients/total"
+      );
+      const data = response.data;
+      const total = data.total;
+      setTotal(total);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -56,18 +71,23 @@ export default function PatientRecord({ theme }) {
       subHeader
       subHeaderAlign="left"
       subHeaderComponent={
-        <InputGroup>
-          <InputLeftElement width="3rem">
-            <IconSearch />
-          </InputLeftElement>
-          <Input
-            pl="3rem"
-            type="search"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-        </InputGroup>
+        <>
+          <Text size="md" mb="4px">
+            Total Patients: <b>{total}</b>
+          </Text>
+          <InputGroup>
+            <InputLeftElement width="3rem">
+              <IconSearch />
+            </InputLeftElement>
+            <Input
+              pl="3rem"
+              type="search"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </InputGroup>
+        </>
       }
     />
   );

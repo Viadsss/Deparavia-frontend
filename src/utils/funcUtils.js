@@ -92,7 +92,8 @@ const filterPatientData = (data, search) => {
       format(row.dateOfBirth, "yyyy-MM-dd").toLowerCase().includes(search);
     const sex = row.sex && row.sex.toLowerCase().includes(search);
     const height = row.height && row.height.toLowerCase().includes(search);
-    const weight = row.weight && row.weight.toLowerCase().includes(search);
+    const weight =
+      row.weight && row.weight.toString().toLowerCase().includes(search);
     const maritalStatus =
       row.maritalStatus && row.maritalStatus.toLowerCase().includes(search);
     const contactNumber =
@@ -104,7 +105,8 @@ const filterPatientData = (data, search) => {
     const city = row.city && row.city.toLowerCase().includes(search);
     const province =
       row.province && row.province.toLowerCase().includes(search);
-    const zipCode = row.zipCode && row.zipCode.toLowerCase().includes(search);
+    const zipCode =
+      row.zipCode && row.zipCode.toString().toLowerCase().includes(search);
     const emergencyName =
       row.emergencyName && row.emergencyName.toLowerCase().includes(search);
     const emergencyRelationship =
