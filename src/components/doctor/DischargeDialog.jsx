@@ -56,7 +56,7 @@ export default function DischargeDialog({
             <Button ref={cancelRef} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="red" onClick={handleDischarge} ml={3}>
+            <Button colorScheme="green" onClick={handleDischarge} ml={3}>
               Discharge
             </Button>
           </AlertDialogFooter>

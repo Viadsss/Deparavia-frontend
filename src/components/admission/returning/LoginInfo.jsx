@@ -87,7 +87,12 @@ export default function LoginInfo({
           </FormErrorMessage>
         </FormControl>
 
-        <Button isLoading={isLoading} type="submit" mt="12px">
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          mt="12px"
+          colorScheme="blue"
+        >
           Next
         </Button>
       </form>

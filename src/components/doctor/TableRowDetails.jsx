@@ -38,6 +38,7 @@ export default function TableRowDetails({ doctorID, data, handleDataUpdate }) {
           <Button
             onClick={onOpenDischarge}
             isDisabled={!data.procedure || !data.diagnosis}
+            colorScheme="green"
           >
             Discharge
           </Button>

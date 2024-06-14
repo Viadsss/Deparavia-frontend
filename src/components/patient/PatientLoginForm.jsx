@@ -100,7 +100,12 @@ export default function PatientLoginForm({ setPatientData }) {
           </FormErrorMessage>
         </FormControl>
         <Box textAlign="center">
-          <Button isLoading={isLoading} loadingText="Logging in" type="submit">
+          <Button
+            isLoading={isLoading}
+            loadingText="Logging in"
+            type="submit"
+            colorScheme="blue"
+          >
             Log in
           </Button>
         </Box>

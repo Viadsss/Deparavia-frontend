@@ -94,7 +94,9 @@ export default function AdminLoginForm({ setIsLogin }) {
           </FormErrorMessage>
         </FormControl>
         <Box textAlign="center">
-          <Button type="submit">Log in</Button>
+          <Button type="submit" colorScheme="blue">
+            Log in
+          </Button>
         </Box>
       </Box>
     </Box>

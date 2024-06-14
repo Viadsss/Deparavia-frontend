@@ -131,7 +131,7 @@ export default function ChangePassModal({ doctorID, isOpen, onClose }) {
           <ModalFooter>
             <HStack>
               <Button onClick={handleClose}>Close</Button>
-              <Button type="submit" isLoading={isLoading}>
+              <Button type="submit" isLoading={isLoading} colorScheme="blue">
                 Change Password
               </Button>
             </HStack>

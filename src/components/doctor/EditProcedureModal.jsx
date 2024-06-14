@@ -68,7 +68,9 @@ export default function EditProcedureModal({
           <ModalFooter>
             <HStack>
               <Button onClick={onClose}>Close</Button>
-              <Button type="submit">Update</Button>
+              <Button type="submit" colorScheme="blue">
+                Update
+              </Button>
             </HStack>
           </ModalFooter>
         </form>

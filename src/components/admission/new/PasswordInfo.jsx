@@ -40,8 +40,6 @@ export default function PasswordInfo({
     setFormData(updatedFormData);
 
     try {
-      // TODO: POST (Insert Admisison to the Admission + Patient Database)
-      // and get the Patient Details for the ID
       const response = await axios.post(
         "http://localhost:8080/api/admission/new",
         updatedFormData
@@ -82,7 +80,7 @@ export default function PasswordInfo({
         </FormControl>
         <HStack mt="12px">
           <Button onClick={handleBackStep}>Back</Button>
-          <Button isLoading={isLoading} type="submit">
+          <Button isLoading={isLoading} type="submit" colorScheme="green">
             Submit
           </Button>
         </HStack>

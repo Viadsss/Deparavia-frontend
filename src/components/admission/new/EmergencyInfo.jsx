@@ -101,7 +101,9 @@ export default function EmergencyInfo({
         </FormControl>
         <HStack mt="12px">
           <Button onClick={handleBackStep}>Back</Button>
-          <Button type="submit">Next</Button>
+          <Button type="submit" colorScheme="blue">
+            Next
+          </Button>
         </HStack>
       </form>
     </>

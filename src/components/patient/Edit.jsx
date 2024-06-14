@@ -368,7 +368,7 @@ export default function Edit({ patientData, setPatientData }) {
             </FormControl>
             <HStack marginTop={"16px"}>
               <Button onClick={handleRestore}>Restore</Button>
-              <Button type="submit" isLoading={isLoading}>
+              <Button type="submit" isLoading={isLoading} colorScheme="blue">
                 Save Changes
               </Button>
             </HStack>

@@ -119,7 +119,7 @@ export default function MedicalInfo({
 
         <HStack mt="12px">
           <Button onClick={handleBackStep}>Back</Button>
-          <Button isLoading={isLoading} type="submit">
+          <Button isLoading={isLoading} type="submit" colorScheme="blue">
             Next
           </Button>
         </HStack>

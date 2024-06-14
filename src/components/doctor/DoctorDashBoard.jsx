@@ -18,7 +18,7 @@ export default function DoctorDashboard({ doctorData, handleLogOut }) {
     <>
       <Box>
         <Box>
-          <Heading as="h2">Welcome {doctorData.doctorName}!</Heading>
+          <Heading as="h2">Welcome Dr. {doctorData.doctorName}!</Heading>
           <Badge>{doctorData.doctorID}</Badge>
         </Box>
         <HStack>
