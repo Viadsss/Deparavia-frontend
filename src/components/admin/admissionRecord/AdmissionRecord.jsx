@@ -5,6 +5,10 @@ import {
   useToast,
   InputGroup,
   InputLeftElement,
+  Button,
+  Stack,
+  Text,
+  Box,
 } from "@chakra-ui/react";
 import { admissionColumns } from "../../../utils/tableUtils";
 import PropTypes from "prop-types";
@@ -18,14 +22,32 @@ export default function AdmissionRecord({ theme, doctorData }) {
   const [admissionData, setAdmissionData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [total, setTotal] = useState(0);
 
   const toast = useToast();
 
   useEffect(() => {
     getAdmissionData();
+    getAdmissionsTotal();
   }, []);
 
+  const handleGetAdmissions = async () => {
+    getAdmissionData();
+    getAdmissionsTotal();
+  };
+
+  const handleGetAdmissionsNoDoctor = async () => {
+    getAdmissionsNoDoctorData();
+    getAdmissionsNoDoctorTotal();
+  };
+
+  const handleGetAdmissionsNotDischarge = async () => {
+    getAdmissionsNotDischargeData();
+    getAdmissionsNotDischargeTotal();
+  };
+
   const getAdmissionData = async () => {
+    setIsPending(true);
     try {
       const response = await axios.get(
         "http://localhost:8080/api/admin/admissions"
@@ -33,10 +55,84 @@ export default function AdmissionRecord({ theme, doctorData }) {
       const data = response.data;
       setAdmissionData(data);
       setFilteredData(data);
+      setSearchTerm("");
     } catch (err) {
-      console.err(err);
+      console.error(err);
     } finally {
       setIsPending(false);
+    }
+  };
+
+  const getAdmissionsNoDoctorData = async () => {
+    setIsPending(true);
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/admin/admissions/noDoctor"
+      );
+      const data = response.data;
+      setAdmissionData(data);
+      setFilteredData(data);
+      setSearchTerm("");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const getAdmissionsNotDischargeData = async () => {
+    setIsPending(true);
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/admin/admissions/notDischarge"
+      );
+      const data = response.data;
+      setAdmissionData(data);
+      setFilteredData(data);
+      setSearchTerm("");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const getAdmissionsTotal = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/admin/admissions/total`
+      );
+      const data = response.data;
+      const total = data.total;
+      setTotal(total);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getAdmissionsNoDoctorTotal = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/admin/admissions/noDoctor/total`
+      );
+      const data = response.data;
+      const total = data.total;
+      setTotal(total);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getAdmissionsNotDischargeTotal = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/admin/admissions/notDischarge/total`
+      );
+      const data = response.data;
+      const total = data.total;
+      setTotal(total);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -88,18 +184,44 @@ export default function AdmissionRecord({ theme, doctorData }) {
       subHeader
       subHeaderAlign="left"
       subHeaderComponent={
-        <InputGroup>
-          <InputLeftElement width="3rem">
-            <IconSearch />
-          </InputLeftElement>
-          <Input
-            pl="3rem"
-            type="search"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-        </InputGroup>
+        <>
+          <Box display={"flex"} flexDirection={"column"}>
+            <Stack direction={{ base: "column", md: "row" }} mb="8px">
+              <Button onClick={handleGetAdmissions} colorScheme="blue">
+                All Admissions
+              </Button>
+              <Button
+                onClick={handleGetAdmissionsNoDoctor}
+                _active={{
+                  bg: "#dddfe2",
+                  transform: "scale(0.98)",
+                  borderColor: "#bec3c9",
+                }}
+              >
+                No Doctors
+              </Button>
+              <Button onClick={handleGetAdmissionsNotDischarge}>
+                Not Discharged
+              </Button>
+            </Stack>
+            <Text size="md" mb="4px">
+              Total Admissions: <b>{total}</b>
+            </Text>
+          </Box>
+
+          <InputGroup>
+            <InputLeftElement width="3rem">
+              <IconSearch />
+            </InputLeftElement>
+            <Input
+              pl="3rem"
+              type="search"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </InputGroup>
+        </>
       }
     />
   );

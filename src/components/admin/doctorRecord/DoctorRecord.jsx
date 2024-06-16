@@ -51,6 +51,7 @@ export default function DoctorRecord({
           <>
             <IconButton
               onClick={handleClick}
+              colorScheme="green"
               icon={<IconUserPlus />}
               mb="12px"
             />
