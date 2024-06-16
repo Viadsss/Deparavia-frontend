@@ -7,6 +7,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import PatientRowDetails from "./PatientRowDetails";
@@ -18,11 +19,13 @@ export default function AdmissionsTable({ patientID }) {
   const [tableData, setTableData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [total, setTotal] = useState(0);
 
   const theme = useColorModeValue("chakraLight", "chakraDark");
 
   useEffect(() => {
     getTableData(patientID);
+    getTotal(patientID);
   }, [patientID]);
 
   const getTableData = async (id) => {
@@ -37,6 +40,19 @@ export default function AdmissionsTable({ patientID }) {
       console.error(err);
     } finally {
       setIsPending(false);
+    }
+  };
+
+  const getTotal = async (id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/patient/${id}/admissions/total`
+      );
+      const data = response.data;
+      const total = data.total;
+      setTotal(total);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -64,18 +80,23 @@ export default function AdmissionsTable({ patientID }) {
       subHeader
       subHeaderAlign="left"
       subHeaderComponent={
-        <InputGroup>
-          <InputLeftElement width="3rem">
-            <IconSearch />
-          </InputLeftElement>
-          <Input
-            pl="3rem"
-            type="search"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-        </InputGroup>
+        <>
+          <Text size="md" mb="4px">
+            Total Admissions: <b>{total}</b>
+          </Text>
+          <InputGroup>
+            <InputLeftElement width="3rem">
+              <IconSearch />
+            </InputLeftElement>
+            <Input
+              pl="3rem"
+              type="search"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+          </InputGroup>
+        </>
       }
     />
   );
