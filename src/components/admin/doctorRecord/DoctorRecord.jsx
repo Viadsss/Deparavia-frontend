@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 import { doctorColumns } from "../../../utils/tableUtils";
 import DoctorRowDetails from "./DoctorRowDetails";
 import {
+  Flex,
   IconButton,
   Input,
   InputGroup,
   InputLeftElement,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { IconSearch, IconUserPlus } from "@tabler/icons-react";
@@ -19,6 +21,7 @@ export default function DoctorRecord({
   handleDoctorUpdate,
   searchTerm,
   handleSearch,
+  total,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -49,12 +52,21 @@ export default function DoctorRecord({
         subHeaderAlign="left"
         subHeaderComponent={
           <>
-            <IconButton
-              onClick={handleClick}
-              colorScheme="green"
-              icon={<IconUserPlus />}
-              mb="12px"
-            />
+            <Flex
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="flex-start"
+            >
+              <IconButton
+                onClick={handleClick}
+                colorScheme="green"
+                icon={<IconUserPlus />}
+                mb="12px"
+              />
+              <Text size="md" mb="4px">
+                Total Doctors: <b>{total}</b>
+              </Text>
+            </Flex>
             <InputGroup>
               <InputLeftElement width="3rem">
                 <IconSearch />
@@ -86,4 +98,5 @@ DoctorRecord.propTypes = {
   handleDoctorUpdate: PropTypes.func.isRequired,
   searchTerm: PropTypes.string.isRequired,
   handleSearch: PropTypes.func.isRequired,
+  total: PropTypes.number.isRequired,
 };

@@ -19,11 +19,14 @@ import VisitorRecord from "./visitorRecord/VisitorRecord";
 import { IconLogout } from "@tabler/icons-react";
 import axios from "axios";
 
+// Jhana
+
 export default function AdminDashBoard({ setIsLogin }) {
   const [doctorData, setDoctorData] = useState([]);
   const [doctorFilteredData, setDoctorFilteredData] = useState([]);
   const [doctorSearchTerm, setDoctorSearchTerm] = useState("");
   const [isPendingDoctor, setIsPendingDoctor] = useState(true);
+  const [total, setTotal] = useState(0);
 
   const bgCard = useColorModeValue("white", "gray.800");
   const borderCard = useColorModeValue("gray.200", "gray.600");
@@ -32,10 +35,24 @@ export default function AdminDashBoard({ setIsLogin }) {
 
   useEffect(() => {
     getDoctorData();
+    getDoctorTotal();
   }, []);
 
   const handleLogOut = () => {
     setIsLogin(false);
+  };
+
+  const getDoctorTotal = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/admin/doctors/total"
+      );
+      const data = response.data;
+      const total = data.total;
+      setTotal(total);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const getDoctorData = async () => {
@@ -62,6 +79,7 @@ export default function AdminDashBoard({ setIsLogin }) {
       setDoctorData(data);
       setDoctorFilteredData(data);
       setDoctorSearchTerm("");
+      getDoctorTotal();
     };
 
     // Refetch admission data after successful PUT request
@@ -111,6 +129,7 @@ export default function AdminDashBoard({ setIsLogin }) {
                   handleDoctorUpdate={handleDoctorUpdate}
                   searchTerm={doctorSearchTerm}
                   handleSearch={handleDoctorSearch}
+                  total={total}
                 />
               </TabPanel>
               <TabPanel>
