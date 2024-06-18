@@ -175,7 +175,7 @@ function validatePatientEditInfo(formData) {
     errors.zipCode = "Zip code must be 4 digits long";
   }
 
-  if (!formData.emergencyName.match(alphabetRegex)) {
+  if (!formData.emergencyName.match(nameRegex)) {
     errors.emergencyName = "Only alphabetic characters allowed";
   } else if (formData.emergencyName.length > 60) {
     errors.emergencyName = `Name must have 60 characters or less, current length: ${formData.emergencyName.length}`;

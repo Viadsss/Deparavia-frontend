@@ -8,21 +8,18 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  IconButton,
   Input,
   InputGroup,
-  InputRightElement,
+  InputLeftElement,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { initPatientLoginInfo } from "../../utils/formUtils";
-import { IconEye, IconEyeClosed } from "@tabler/icons-react";
 import axios from "axios";
 
 export default function PatientLoginForm({ setPatientData }) {
   const [formData, setFormData] = useState(initPatientLoginInfo);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [show, setShow] = useState(false);
   const bgCard = useColorModeValue("white", "gray.800");
   const borderCard = useColorModeValue("gray.200", "gray.600");
 
@@ -37,7 +34,7 @@ export default function PatientLoginForm({ setPatientData }) {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/patient/login",
+        "http://localhost:8080/api/patient/login2",
         formData
       );
       const data = response.data;
@@ -77,23 +74,27 @@ export default function PatientLoginForm({ setPatientData }) {
             onChange={handleChange}
             mb="12px"
           />
-          <FormLabel>Password</FormLabel>
+          <FormLabel>Date of Birth</FormLabel>
+          <Input
+            type="date"
+            name="dateOfBirth"
+            value={formData.dateOfBirth}
+            onChange={handleChange}
+            mb="12px"
+          />
+          <FormLabel>Contact Number</FormLabel>
           <InputGroup>
+            <InputLeftElement pointerEvents="none">#</InputLeftElement>
             <Input
-              type={show ? "text" : "password"}
-              name="password"
-              maxLength={20}
-              value={formData.password}
+              type="tel"
+              name="contactNumber"
+              maxLength={11}
+              value={formData.contactNumber}
               onChange={handleChange}
               mb="12px"
             />
-            <InputRightElement>
-              <IconButton
-                icon={show ? <IconEye /> : <IconEyeClosed />}
-                onClick={() => setShow(!show)}
-              />
-            </InputRightElement>
           </InputGroup>
+
           <FormErrorMessage>
             <FormErrorIcon />
             {errorMsg}

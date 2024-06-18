@@ -56,13 +56,10 @@ const initEmergencyInfo = {
   emergencyContactNumber: "",
 };
 
-const initPasswordInfo = {
-  password: "",
-};
-
 const initPatientLoginInfo = {
   patientID: "",
-  password: "",
+  dateOfBirth: "",
+  contactNumber: "",
 };
 
 const initDoctorLoginInfo = {
@@ -74,7 +71,6 @@ const newAdmissionSteps = [
   { title: "First", description: "Personal Information" },
   { title: "Second", description: "Medical Information" },
   { title: "Third", description: "Emergency Contact Information" },
-  { title: "Fourth", description: "Password Information" },
 ];
 
 const returningAdmissionSteps = [
@@ -176,7 +172,6 @@ export {
   initPatientInfo,
   initMedicalInfo,
   initEmergencyInfo,
-  initPasswordInfo,
   initPatientLoginInfo,
   initDoctorLoginInfo,
   newAdmissionSteps,

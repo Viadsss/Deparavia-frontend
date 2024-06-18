@@ -7,24 +7,21 @@ import {
   initEmergencyInfo,
   initMedicalInfo,
   initNewAdmissionForm,
-  initPasswordInfo,
   initPatientInfo,
   newAdmissionSteps,
 } from "../../../utils/formUtils";
 import EmergencyInfo from "./EmergencyInfo";
 import NewAdmissionMessage from "./NewAdmissionMessage";
-import PasswordInfo from "./PasswordInfo";
 
 export default function NewAdmissisonForm() {
   const [formData, setFormData] = useState(initNewAdmissionForm);
   const [patientFormData, setPatientFormData] = useState(initPatientInfo);
   const [medicalFormData, setMedicalFormData] = useState(initMedicalInfo);
   const [emergencyFormData, setEmergencyFormData] = useState(initEmergencyInfo);
-  const [passwordFormData, setPasswordFormData] = useState(initPasswordInfo);
   const [newUserData, setNewUserData] = useState(null);
   const { activeStep, setActiveStep } = useSteps({
     index: 0,
-    count: 4,
+    count: 3,
   });
   const bgCard = useColorModeValue("white", "gray.800");
   const borderCard = useColorModeValue("gray.200", "gray.600");
@@ -79,22 +76,13 @@ export default function NewAdmissisonForm() {
             setEmergencyFormData={setEmergencyFormData}
             formData={formData}
             setFormData={setFormData}
-            handleBackStep={handleBackStep}
-            handleNextStep={handleNextStep}
-          />
-        )}
-        {activeStep == 3 && (
-          <PasswordInfo
-            passwordFormData={passwordFormData}
-            setPasswordFormData={setPasswordFormData}
-            formData={formData}
-            setFormData={setNewUserData}
             setNewUserData={setNewUserData}
             handleBackStep={handleBackStep}
             handleNextStep={handleNextStep}
           />
         )}
-        {activeStep == 4 && <NewAdmissionMessage newUserData={newUserData} />}
+
+        {activeStep == 3 && <NewAdmissionMessage newUserData={newUserData} />}
       </Box>
     </Box>
   );

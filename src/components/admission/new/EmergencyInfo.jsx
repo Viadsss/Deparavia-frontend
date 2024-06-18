@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { initEmergencyInfo } from "../../../utils/formUtils";
+import {
+  initEmergencyInfo,
+  initNewAdmissionForm,
+} from "../../../utils/formUtils";
 import {
   Button,
   FormControl,
@@ -14,16 +17,19 @@ import {
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 import { validateEmergencyInfo } from "../../../utils/formErrorUtils";
+import axios from "axios";
 
 export default function EmergencyInfo({
   emergencyFormData,
   setEmergencyFormData,
   formData,
   setFormData,
+  setNewUserData,
   handleBackStep,
   handleNextStep,
 }) {
   const [errors, setErrors] = useState(initEmergencyInfo);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,7 +46,20 @@ export default function EmergencyInfo({
 
     const updatedFormData = { ...formData, ...emergencyFormData };
     setFormData(updatedFormData);
-    handleNextStep();
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/admission/new",
+        updatedFormData
+      );
+      const data = response.data;
+      setFormData(initNewAdmissionForm);
+      setNewUserData(data);
+      handleNextStep();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -101,8 +120,8 @@ export default function EmergencyInfo({
         </FormControl>
         <HStack mt="12px">
           <Button onClick={handleBackStep}>Back</Button>
-          <Button type="submit" colorScheme="blue">
-            Next
+          <Button isLoading={isLoading} type="submit" colorScheme="green">
+            Submit
           </Button>
         </HStack>
       </form>
@@ -115,6 +134,7 @@ EmergencyInfo.propTypes = {
   setEmergencyFormData: PropTypes.func.isRequired,
   formData: PropTypes.object.isRequired,
   setFormData: PropTypes.func.isRequired,
+  setNewUserData: PropTypes.func.isRequired,
   handleBackStep: PropTypes.func.isRequired,
   handleNextStep: PropTypes.func.isRequired,
 };

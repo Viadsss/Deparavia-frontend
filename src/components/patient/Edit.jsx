@@ -24,19 +24,15 @@ import {
   Wrap,
   Box,
   Heading,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { initEditPatientForm } from "../../utils/formUtils";
 import { validatePatientEditInfo } from "../../utils/formErrorUtils";
-import ChangePassModal from "./ChangePassModal";
 import axios from "axios";
 
 export default function Edit({ patientData, setPatientData }) {
   const [formData, setFormData] = useState(patientData);
   const [errors, setErrors] = useState(initEditPatientForm);
   const [isLoading, setIsLoading] = useState(false);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
 
@@ -106,9 +102,6 @@ export default function Edit({ patientData, setPatientData }) {
 
   return (
     <>
-      <Button onClick={onOpen} mb="24px">
-        Change Password
-      </Button>
       <form onSubmit={handleSubmit} style={{ margin: "0" }}>
         <Flex direction={{ base: "column", md: "row" }} gap="24px">
           <Box flex="1">
@@ -375,11 +368,6 @@ export default function Edit({ patientData, setPatientData }) {
           </Box>
         </Flex>
       </form>
-      <ChangePassModal
-        patientID={patientData.patientID}
-        isOpen={isOpen}
-        onClose={onClose}
-      />
     </>
   );
 }

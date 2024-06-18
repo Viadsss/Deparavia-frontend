@@ -5,12 +5,10 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  IconButton,
   Input,
   InputGroup,
-  InputRightElement,
+  InputLeftElement,
 } from "@chakra-ui/react";
-import { IconEye, IconEyeClosed } from "@tabler/icons-react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { useState } from "react";
@@ -22,7 +20,6 @@ export default function LoginInfo({
   handleNextStep,
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
@@ -37,7 +34,7 @@ export default function LoginInfo({
     setFormData((prevData) => ({ ...prevData, ...loginFormData }));
     try {
       await axios.post(
-        "http://localhost:8080/api/admission/returning/login",
+        "http://localhost:8080/api/admission/returning/login2",
         loginFormData
       );
       handleNextStep();
@@ -65,21 +62,25 @@ export default function LoginInfo({
             value={loginFormData.patientID}
             onChange={handleChange}
           />
-          <FormLabel>Password</FormLabel>
+          <FormLabel>Date of Birth</FormLabel>
+          <Input
+            type="date"
+            name="dateOfBirth"
+            value={loginFormData.dateOfBirth}
+            onChange={handleChange}
+            mb="12px"
+          />
+          <FormLabel>Contact Number</FormLabel>
           <InputGroup>
+            <InputLeftElement pointerEvents="none">#</InputLeftElement>
             <Input
-              type={show ? "text" : "password"}
-              name="password"
-              maxLength={20}
-              value={loginFormData.password}
+              type="tel"
+              name="contactNumber"
+              maxLength={11}
+              value={loginFormData.contactNumber}
               onChange={handleChange}
+              mb="12px"
             />
-            <InputRightElement>
-              <IconButton
-                icon={show ? <IconEye /> : <IconEyeClosed />}
-                onClick={() => setShow(!show)}
-              />
-            </InputRightElement>
           </InputGroup>
           <FormErrorMessage>
             <FormErrorIcon />

@@ -54,9 +54,14 @@ export default function EditDrawer({
               value={selectedDoctor}
               onChange={(e) => setSelectedDoctor(e.target.value)}
               ref={firstField}
+              fontFamily={"Lexend"}
             >
               {doctorData.map((doctor) => (
-                <option key={doctor.doctorID} value={doctor.doctorID}>
+                <option
+                  key={doctor.doctorID}
+                  value={doctor.doctorID}
+                  style={{ fontFamily: "Lexend" }}
+                >
                   {doctor.doctorName}
                 </option>
               ))}
