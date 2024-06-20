@@ -1,11 +1,13 @@
 import {
   Box,
   Button,
+  Stack,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
@@ -18,6 +20,8 @@ import { filterDoctorData } from "../../utils/funcUtils";
 import VisitorRecord from "./visitorRecord/VisitorRecord";
 import { IconLogout } from "@tabler/icons-react";
 import axios from "axios";
+import MonthModal from "./MonthModal";
+import YearModal from "./YearModal";
 
 // Jhana
 
@@ -27,6 +31,16 @@ export default function AdminDashBoard({ setIsLogin }) {
   const [doctorSearchTerm, setDoctorSearchTerm] = useState("");
   const [isPendingDoctor, setIsPendingDoctor] = useState(true);
   const [total, setTotal] = useState(0);
+  const {
+    isOpen: isOpenMonth,
+    onOpen: onOpenMonth,
+    onClose: onCloseMonth,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenYear,
+    onOpen: onOpenYear,
+    onClose: onCloseYear,
+  } = useDisclosure();
 
   const bgCard = useColorModeValue("white", "gray.800");
   const borderCard = useColorModeValue("gray.200", "gray.600");
@@ -100,9 +114,17 @@ export default function AdminDashBoard({ setIsLogin }) {
   return (
     <>
       <Box>
-        <Button leftIcon={<IconLogout />} onClick={handleLogOut} mb="16px">
-          Log out
-        </Button>
+        <Stack direction={{ base: "column", md: "row" }} mb="8px">
+          <Button leftIcon={<IconLogout />} onClick={handleLogOut} mb="16px">
+            Log out
+          </Button>
+          <Button onClick={onOpenMonth} colorScheme="blue">
+            Monthly Overview
+          </Button>
+          <Button onClick={onOpenYear} colorScheme="blue">
+            Yearly Overview
+          </Button>
+        </Stack>
         <Box
           py="1rem"
           bg={bgCard}
@@ -142,6 +164,8 @@ export default function AdminDashBoard({ setIsLogin }) {
           </Tabs>
         </Box>
       </Box>
+      <MonthModal isOpen={isOpenMonth} onClose={onCloseMonth} />
+      <YearModal isOpen={isOpenYear} onClose={onCloseYear} />
     </>
   );
 }

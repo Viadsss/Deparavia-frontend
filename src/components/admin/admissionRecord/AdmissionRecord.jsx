@@ -23,9 +23,9 @@ export default function AdmissionRecord({ theme, doctorData }) {
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [total, setTotal] = useState(0);
+  const [admissionState, setAdmissionState] = useState(1);
 
   const toast = useToast();
-
   useEffect(() => {
     getAdmissionData();
     getAdmissionsTotal();
@@ -34,16 +34,19 @@ export default function AdmissionRecord({ theme, doctorData }) {
   const handleGetAdmissions = async () => {
     getAdmissionData();
     getAdmissionsTotal();
+    setAdmissionState(1);
   };
 
   const handleGetAdmissionsNoDoctor = async () => {
     getAdmissionsNoDoctorData();
     getAdmissionsNoDoctorTotal();
+    setAdmissionState(2);
   };
 
   const handleGetAdmissionsNotDischarge = async () => {
     getAdmissionsNotDischargeData();
     getAdmissionsNotDischargeTotal();
+    setAdmissionState(3);
   };
 
   const getAdmissionData = async () => {
@@ -138,13 +141,19 @@ export default function AdmissionRecord({ theme, doctorData }) {
 
   const handleDataUpdate = async (toastDetails) => {
     const fetchAdmissionsData = async () => {
-      const response = await axios.get(
-        "http://localhost:8080/api/admin/admissions"
-      );
-      const data = response.data;
-      setAdmissionData(data);
-      setFilteredData(data);
-      setSearchTerm("");
+      switch (admissionState) {
+        case 1:
+          handleGetAdmissions();
+          break;
+        case 2:
+          handleGetAdmissionsNoDoctor();
+          break;
+        case 3:
+          handleGetAdmissionsNotDischarge();
+          break;
+        default:
+          break;
+      }
     };
 
     // Refetch admission data after successful PUT request
@@ -163,67 +172,69 @@ export default function AdmissionRecord({ theme, doctorData }) {
   };
 
   return (
-    <DataTable
-      theme={theme}
-      columns={admissionColumns}
-      data={filteredData}
-      progressPending={isPending}
-      fixedHeader
-      pagination
-      highlightOnHover
-      pointerOnHover
-      expandableRows
-      expandOnRowClicked
-      expandableRowsComponent={({ data }) => (
-        <AdmissionRowDetails
-          data={data}
-          doctorData={doctorData}
-          handleDataUpdate={handleDataUpdate}
-        />
-      )}
-      subHeader
-      subHeaderAlign="left"
-      subHeaderComponent={
-        <>
-          <Box display={"flex"} flexDirection={"column"}>
-            <Stack direction={{ base: "column", md: "row" }} mb="8px">
-              <Button onClick={handleGetAdmissions} colorScheme="blue">
-                All Admissions
-              </Button>
-              <Button
-                onClick={handleGetAdmissionsNoDoctor}
-                _active={{
-                  bg: "#dddfe2",
-                  transform: "scale(0.98)",
-                  borderColor: "#bec3c9",
-                }}
-              >
-                No Doctors
-              </Button>
-              <Button onClick={handleGetAdmissionsNotDischarge}>
-                Not Discharged
-              </Button>
-            </Stack>
-            <Text size="md" mb="4px">
-              Total Admissions: <b>{total}</b>
-            </Text>
-          </Box>
+    <>
+      <DataTable
+        theme={theme}
+        columns={admissionColumns}
+        data={filteredData}
+        progressPending={isPending}
+        fixedHeader
+        pagination
+        highlightOnHover
+        pointerOnHover
+        expandableRows
+        expandOnRowClicked
+        expandableRowsComponent={({ data }) => (
+          <AdmissionRowDetails
+            data={data}
+            doctorData={doctorData}
+            handleDataUpdate={handleDataUpdate}
+          />
+        )}
+        subHeader
+        subHeaderAlign="left"
+        subHeaderComponent={
+          <>
+            <Box display={"flex"} flexDirection={"column"}>
+              <Stack direction={{ base: "column", md: "row" }} mb="8px">
+                <Button onClick={handleGetAdmissions} colorScheme="blue">
+                  All Admissions
+                </Button>
+                <Button
+                  onClick={handleGetAdmissionsNoDoctor}
+                  _active={{
+                    bg: "#dddfe2",
+                    transform: "scale(0.98)",
+                    borderColor: "#bec3c9",
+                  }}
+                >
+                  No Doctors
+                </Button>
+                <Button onClick={handleGetAdmissionsNotDischarge}>
+                  Not Discharged
+                </Button>
+              </Stack>
+              <Text size="md" mb="4px">
+                Total Admissions: <b>{total}</b>
+              </Text>
+            </Box>
 
-          <InputGroup>
-            <InputLeftElement width="3rem">
-              <IconSearch />
-            </InputLeftElement>
-            <Input
-              pl="3rem"
-              type="search"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-          </InputGroup>
-        </>
-      }
-    />
+            <InputGroup>
+              <InputLeftElement width="3rem">
+                <IconSearch />
+              </InputLeftElement>
+              <Input
+                pl="3rem"
+                type="search"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </InputGroup>
+          </>
+        }
+      />
+    </>
   );
 }
 
