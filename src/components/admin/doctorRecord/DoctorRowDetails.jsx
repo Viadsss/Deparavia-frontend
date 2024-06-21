@@ -1,4 +1,4 @@
-import { Box, IconButton, Text, useDisclosure } from "@chakra-ui/react";
+import { Badge, Box, IconButton, Text, useDisclosure } from "@chakra-ui/react";
 import { IconEdit } from "@tabler/icons-react";
 import PropTypes from "prop-types";
 import EditDrawer from "./EditDrawer";
@@ -14,6 +14,15 @@ export default function DoctorRowDetails({ data, handleDoctorUpdate }) {
   return (
     <>
       <Box py="12px">
+        {data.dutyStatus == "On Duty" ? (
+          <Badge colorScheme="green" fontSize="sm">
+            {data.dutyStatus}
+          </Badge>
+        ) : (
+          <Badge colorScheme="blue" fontSize="sm">
+            {data.dutyStatus}
+          </Badge>
+        )}
         <Text>
           <strong>Doctor ID:</strong> {data.doctorID}
         </Text>

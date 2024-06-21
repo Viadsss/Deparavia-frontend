@@ -2,11 +2,27 @@ import DataTable from "react-data-table-component";
 import { visitorColumns } from "../../../utils/tableUtils";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { InputGroup, InputLeftElement, Input, Text } from "@chakra-ui/react";
+import {
+  InputGroup,
+  InputLeftElement,
+  Input,
+  Text,
+  Flex,
+  Button,
+  useDisclosure,
+  useToast,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+} from "@chakra-ui/react";
 import { filterVisitorData } from "../../../utils/funcUtils";
 import VisitorRowDetails from "./visitorRowDetails";
-import { IconSearch } from "@tabler/icons-react";
+import { IconChevronDown, IconSearch } from "@tabler/icons-react";
 import axios from "axios";
+import DeleteMultiDialog from "./DeleteMultiDialog";
+import DeleteTimeDialog from "./DeleteTimeDialog";
+import DeleteAllDialog from "./DeleteAllDialog";
 
 export default function VisitorRecord({ theme }) {
   const [isPending, setIsPending] = useState(true);
@@ -14,12 +30,30 @@ export default function VisitorRecord({ theme }) {
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [total, setTotal] = useState(0);
+  const [isDelete, setIsDelete] = useState(false);
+  const [selectedRowIDs, setSelectedRowIDs] = useState([]);
+  const [deleteTimePick, setDeleteTimePick] = useState("");
+  const {
+    isOpen: isOpenMulti,
+    onOpen: onOpenMulti,
+    onClose: onCloseMulti,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenTime,
+    onOpen: onOpenTime,
+    onClose: onCloseTime,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenAll,
+    onOpen: onOpenAll,
+    onClose: onCloseAll,
+  } = useDisclosure();
+  const toast = useToast();
 
   useEffect(() => {
     getVisitorData();
     getVisitorTotal();
   }, []);
-
 
   const getVisitorTotal = async () => {
     try {
@@ -49,11 +83,50 @@ export default function VisitorRecord({ theme }) {
     }
   };
 
+  const handleDataUpdate = async (toastDetails) => {
+    const fetchAdmissionsData = async () => {
+      getVisitorData();
+      getVisitorTotal();
+    };
+
+    // Refetch admission data after successful PUT request
+    try {
+      toast.promise(fetchAdmissionsData(), toastDetails);
+    } catch (err) {
+      console.error("Error fetching admissions:", err);
+    }
+  };
+
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     const search = e.target.value.toLowerCase();
     const newRows = filterVisitorData(visitorData, search);
     setFilteredData(newRows);
+  };
+
+  const handleSelectedRowsChange = ({ selectedRows }) => {
+    const selectedRowIDs = selectedRows.map((row) => row.visitorID);
+    setSelectedRowIDs(selectedRowIDs);
+  };
+
+  const handleDelete = () => {
+    setIsDelete(true);
+  };
+
+  const handleCancel = () => {
+    setIsDelete(false);
+    setSelectedRowIDs([]);
+  };
+
+  const handleSaveDelete = () => {
+    if (selectedRowIDs.length == 0) return;
+    console.log(selectedRowIDs);
+    onOpenMulti();
+  };
+
+  const onOpenDeleteDialog = (time) => {
+    setDeleteTimePick(time);
+    onOpenTime();
   };
 
   return (
@@ -68,14 +141,57 @@ export default function VisitorRecord({ theme }) {
       pointerOnHover
       expandableRows
       expandOnRowClicked
-      expandableRowsComponent={({ data }) => <VisitorRowDetails data={data} />}
+      expandableRowsComponent={({ data }) => (
+        <VisitorRowDetails data={data} handleDataUpdate={handleDataUpdate} />
+      )}
+      selectableRows={isDelete}
+      selectableRowsNoSelectAll
+      selectableRowsRadio="checkbox"
+      onSelectedRowsChange={handleSelectedRowsChange}
+      clearSelectedRows={isDelete}
       subHeader
       subHeaderAlign="left"
       subHeaderComponent={
         <>
-          <Text size="md" mb="4px">
-            Total Visitors: <b>{total}</b>
-          </Text>
+          <Flex direction="column">
+            <Flex gap="8px" flexWrap="wrap" mb="8px">
+              {isDelete ? (
+                <>
+                  <Button colorScheme="red" onClick={handleSaveDelete}>
+                    Delete
+                  </Button>
+                  <Button onClick={handleCancel}>Cancel</Button>
+                </>
+              ) : (
+                <Button onClick={handleDelete}>Delete By Select</Button>
+              )}
+              <Menu>
+                <MenuButton as={Button} rightIcon={<IconChevronDown />}>
+                  Delete By Time
+                </MenuButton>
+                <MenuList zIndex={10}>
+                  <MenuItem onClick={() => onOpenDeleteDialog("1month")}>
+                    More than a Month Ago
+                  </MenuItem>
+                  <MenuItem onClick={() => onOpenDeleteDialog("3month")}>
+                    More than 3 Months Ago
+                  </MenuItem>
+                  <MenuItem onClick={() => onOpenDeleteDialog("6month")}>
+                    More than 6 months Ago
+                  </MenuItem>
+                  <MenuItem onClick={() => onOpenDeleteDialog("1year")}>
+                    More than a Year Ago
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+              <Button colorScheme="red" onClick={onOpenAll}>
+                Delete All
+              </Button>
+            </Flex>
+            <Text size="md" mb="4px">
+              Total Visitors: <b>{total}</b>
+            </Text>
+          </Flex>
           <InputGroup>
             <InputLeftElement width="3rem">
               <IconSearch />
@@ -88,6 +204,24 @@ export default function VisitorRecord({ theme }) {
               onChange={handleSearch}
             />
           </InputGroup>
+          <DeleteMultiDialog
+            isOpen={isOpenMulti}
+            onClose={onCloseMulti}
+            ids={selectedRowIDs}
+            handleCancel={handleCancel}
+            handleDataUpdate={handleDataUpdate}
+          />
+          <DeleteTimeDialog
+            isOpen={isOpenTime}
+            onClose={onCloseTime}
+            deleteTimePick={deleteTimePick}
+            handleDataUpdate={handleDataUpdate}
+          />
+          <DeleteAllDialog
+            isOpen={isOpenAll}
+            onClose={onCloseAll}
+            handleDataUpdate={handleDataUpdate}
+          />
         </>
       }
     />

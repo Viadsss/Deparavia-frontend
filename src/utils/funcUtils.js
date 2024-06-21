@@ -143,7 +143,7 @@ const filterPatientData = (data, search) => {
 const filterVisitorData = (data, search) => {
   return data.filter((row) => {
     const visitorID =
-      row.visitorID && row.visitorID.toLowerCase().includes(search);
+      row.visitorID && row.visitorID.toString().toLowerCase().includes(search);
     const patientID =
       row.patientID && row.patientID.toLowerCase().includes(search);
     const visitorDate =

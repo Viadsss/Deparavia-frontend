@@ -11,20 +11,13 @@ import { useRef } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-export default function DeleteDialog({
-  data,
-  isOpen,
-  onClose,
-  handleDataUpdate,
-}) {
+export default function DeleteAllDialog({ isOpen, onClose, handleDataUpdate }) {
   const cancelRef = useRef();
 
   const handleDelete = async () => {
-    onClose();
-    await axios.delete(
-      `http://localhost:8080/api/admin/admissions/${data.admissionID}`
-    );
+    await axios.delete("http://localhost:8080/api/admin/visitors");
     handleDataUpdate(toastDetails);
+    onClose();
   };
 
   return (
@@ -37,7 +30,7 @@ export default function DeleteDialog({
       <AlertDialogOverlay>
         <AlertDialogContent>
           <AlertDialogHeader fontWeight="bold">
-            Delete Admission
+            Delete All Visitors
           </AlertDialogHeader>
           <AlertDialogBody>
             Are you sure? You can&apos;t undo this action afterwards.
@@ -56,8 +49,7 @@ export default function DeleteDialog({
   );
 }
 
-DeleteDialog.propTypes = {
-  data: PropTypes.object.isRequired,
+DeleteAllDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   handleDataUpdate: PropTypes.func.isRequired,
@@ -65,16 +57,16 @@ DeleteDialog.propTypes = {
 
 const toastDetails = {
   success: {
-    title: "Admission Deleted",
-    description: "The admission has been successfully deleted.",
+    title: "All Visitors Deleted",
+    description: "All visitors has been successfully deleted.",
   },
   error: {
     title: "Delete Failed",
     description:
-      "An error occurred while deleting the admission. Please try again.",
+      "An error occurred while deleting all visitors. Please try again.",
   },
   loading: {
-    title: "Deleting Admission...",
-    description: "Please wait while the admission is being deleted.",
+    title: "Deleting All Admission...",
+    description: "Please wait while all visitors is being deleted.",
   },
 };

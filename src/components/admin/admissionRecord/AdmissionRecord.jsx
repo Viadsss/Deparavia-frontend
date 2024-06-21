@@ -6,9 +6,8 @@ import {
   InputGroup,
   InputLeftElement,
   Button,
-  Stack,
   Text,
-  Box,
+  Flex,
 } from "@chakra-ui/react";
 import { admissionColumns } from "../../../utils/tableUtils";
 import PropTypes from "prop-types";
@@ -26,6 +25,7 @@ export default function AdmissionRecord({ theme, doctorData }) {
   const [admissionState, setAdmissionState] = useState(1);
 
   const toast = useToast();
+
   useEffect(() => {
     getAdmissionData();
     getAdmissionsTotal();
@@ -195,8 +195,8 @@ export default function AdmissionRecord({ theme, doctorData }) {
         subHeaderAlign="left"
         subHeaderComponent={
           <>
-            <Box display={"flex"} flexDirection={"column"}>
-              <Stack direction={{ base: "column", md: "row" }} mb="8px">
+            <Flex direction="column">
+              <Flex gap="8px" flexWrap="wrap" mb="8px">
                 <Button onClick={handleGetAdmissions} colorScheme="blue">
                   All Admissions
                 </Button>
@@ -213,11 +213,11 @@ export default function AdmissionRecord({ theme, doctorData }) {
                 <Button onClick={handleGetAdmissionsNotDischarge}>
                   Not Discharged
                 </Button>
-              </Stack>
+              </Flex>
               <Text size="md" mb="4px">
                 Total Admissions: <b>{total}</b>
               </Text>
-            </Box>
+            </Flex>
 
             <InputGroup>
               <InputLeftElement width="3rem">

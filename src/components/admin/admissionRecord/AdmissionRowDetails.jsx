@@ -6,11 +6,10 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IconEdit, IconTrashX } from "@tabler/icons-react";
+import { IconEdit } from "@tabler/icons-react";
 import { format } from "date-fns";
 import PropTypes from "prop-types";
 import EditDrawer from "./EditDrawer";
-import DeleteDialog from "./DeleteDialog";
 
 export default function AdmissionRowDetails({
   data,
@@ -22,18 +21,9 @@ export default function AdmissionRowDetails({
     onOpen: onOpenEdit,
     onClose: onCloseEdit,
   } = useDisclosure();
-  const {
-    isOpen: isOpenDelete,
-    onOpen: onOpenDelete,
-    onClose: onCloseDelete,
-  } = useDisclosure();
 
   const handleEdit = () => {
     onOpenEdit();
-  };
-
-  const handleDelete = () => {
-    onOpenDelete();
   };
 
   return (
@@ -95,11 +85,6 @@ export default function AdmissionRowDetails({
           {!data.dischargeDate && (
             <IconButton onClick={handleEdit} icon={<IconEdit />} />
           )}
-          <IconButton
-            onClick={handleDelete}
-            icon={<IconTrashX />}
-            colorScheme="red"
-          />
         </HStack>
       </Box>
       <EditDrawer
@@ -107,12 +92,6 @@ export default function AdmissionRowDetails({
         isOpen={isOpenEdit}
         onClose={onCloseEdit}
         doctorData={doctorData}
-        handleDataUpdate={handleDataUpdate}
-      />
-      <DeleteDialog
-        data={data}
-        isOpen={isOpenDelete}
-        onClose={onCloseDelete}
         handleDataUpdate={handleDataUpdate}
       />
     </>

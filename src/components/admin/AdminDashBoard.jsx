@@ -1,7 +1,7 @@
 import {
   Box,
   Button,
-  Stack,
+  Flex,
   Tab,
   TabList,
   TabPanel,
@@ -114,17 +114,19 @@ export default function AdminDashBoard({ setIsLogin }) {
   return (
     <>
       <Box>
-        <Stack direction={{ base: "column", md: "row" }} mb="8px">
+        <Flex rowGap="4px" columnGap="8px" mb="8px" flexWrap="wrap">
           <Button leftIcon={<IconLogout />} onClick={handleLogOut} mb="16px">
             Log out
           </Button>
-          <Button onClick={onOpenMonth} colorScheme="blue">
-            Monthly Overview
-          </Button>
-          <Button onClick={onOpenYear} colorScheme="blue">
-            Yearly Overview
-          </Button>
-        </Stack>
+          <Flex columnGap="8px" rowGap="4px" flexWrap="wrap">
+            <Button onClick={onOpenMonth} colorScheme="blue">
+              Monthly Overview
+            </Button>
+            <Button onClick={onOpenYear} colorScheme="blue">
+              Yearly Overview
+            </Button>
+          </Flex>
+        </Flex>
         <Box
           py="1rem"
           bg={bgCard}
