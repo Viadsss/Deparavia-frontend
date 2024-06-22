@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { doctorColumns } from "../../../utils/tableUtils";
 import DoctorRowDetails from "./DoctorRowDetails";
 import {
+  Button,
   Flex,
   IconButton,
   Input,
@@ -23,6 +24,8 @@ export default function DoctorRecord({
   handleSearch,
   total,
 }) {
+  const [total, setTotal] = useState(0);
+  const [admissionState, setAdmissionState] = useState(1);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleClick = () => {
@@ -57,12 +60,19 @@ export default function DoctorRecord({
               justifyContent="flex-start"
               alignItems="flex-start"
             >
-              <IconButton
-                onClick={handleClick}
-                colorScheme="green"
-                icon={<IconUserPlus />}
-                mb="12px"
-              />
+              <Flex gap="8px" flexWrap="wrap" mb="8px">
+                <IconButton
+                  onClick={handleClick}
+                  colorScheme="green"
+                  icon={<IconUserPlus />}
+                  mb="12px"
+                />
+                <Button>On Duty</Button>
+                <Button>Off Duty</Button>
+                <Button colorScheme="green">Active</Button>
+                <Button colorScheme="red">Inactive</Button>
+                <Button colorScheme="yellow">On Leave</Button>
+              </Flex>
               <Text size="md" mb="4px">
                 Total Doctors: <b>{total}</b>
               </Text>

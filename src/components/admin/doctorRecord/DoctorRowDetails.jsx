@@ -11,15 +11,41 @@ export default function DoctorRowDetails({ data, handleDoctorUpdate }) {
     onOpen();
   };
 
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case "A":
+        return (
+          <Badge colorScheme="green" fontSize="sm">
+            Active
+          </Badge>
+        );
+      case "I":
+        return (
+          <Badge colorScheme="red" fontSize="sm">
+            Inactive
+          </Badge>
+        );
+      case "L":
+        return (
+          <Badge colorScheme="yellow" fontSize="sm">
+            On Leave
+          </Badge>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <Box py="12px">
-        {data.dutyStatus == "On Duty" ? (
-          <Badge colorScheme="green" fontSize="sm">
-            {data.dutyStatus}
-          </Badge>
-        ) : (
-          <Badge colorScheme="blue" fontSize="sm">
+        {getStatusBadge(data.doctorStatus)}
+        {data.doctorStatus === "A" && (
+          <Badge
+            colorScheme={data.dutyStatus === "On Duty" ? "green" : "blue"}
+            fontSize="sm"
+            ml="8px"
+          >
             {data.dutyStatus}
           </Badge>
         )}

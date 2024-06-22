@@ -88,11 +88,13 @@ const initDoctorForm = {
   doctorPassword: "",
   doctorStartTime: "",
   doctorEndTime: "",
-};
+  doctorStatus: "A",
+};  
 
 const initDoctorShiftForm = {
   doctorStartTime: "",
   doctorEndTime: "",
+  doctorStatus: "",
 };
 
 const initVisitorForm = {

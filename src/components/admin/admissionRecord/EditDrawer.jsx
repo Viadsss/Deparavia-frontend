@@ -35,6 +35,10 @@ export default function EditDrawer({
     }
   };
 
+  const onDutyDoctors = doctorData.filter(
+    (doctor) => doctor.doctorStatus === "A" && doctor.dutyStatus === "On Duty"
+  );
+
   return (
     <Drawer
       isOpen={isOpen}
@@ -56,7 +60,7 @@ export default function EditDrawer({
               ref={firstField}
               fontFamily={"Lexend"}
             >
-              {doctorData.map((doctor) => (
+              {onDutyDoctors.map((doctor) => (
                 <option
                   key={doctor.doctorID}
                   value={doctor.doctorID}

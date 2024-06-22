@@ -86,13 +86,7 @@ export default function AdminDashBoard({ setIsLogin }) {
 
   const handleDoctorUpdate = async (toastDetails) => {
     const fetchDoctorTable = async () => {
-      const response = await axios.get(
-        "http://localhost:8080/api/admin/doctors"
-      );
-      const data = response.data;
-      setDoctorData(data);
-      setDoctorFilteredData(data);
-      setDoctorSearchTerm("");
+      getDoctorData();
       getDoctorTotal();
     };
 

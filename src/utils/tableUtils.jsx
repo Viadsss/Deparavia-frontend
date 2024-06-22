@@ -723,6 +723,7 @@ const doctorColumns = [
     selector: (row) => row.doctorEndTime,
     sortable: true,
   },
+  { name: "Status", selector: (row) => row.doctorStatus, sortable: true },
 ];
 
 const patientColumns = [
