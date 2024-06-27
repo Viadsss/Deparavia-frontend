@@ -18,8 +18,6 @@ export default function App() {
           maxWidth="1600px"
           minHeight="calc(100vh - 64px)"
           mx="auto"
-          border={"2px"}
-          borderColor={"blue"}
         >
           <Outlet />
         </Box>

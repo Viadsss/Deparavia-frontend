@@ -1,24 +1,12 @@
-import { Link as ReactRouterLink } from "react-router-dom";
-import { Box, Link as ChakraLink } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import Hero from "../components/home/Hero";
+import Team from "../components/home/Team";
 
 export default function Home() {
   return (
-    <Box bg="tomato" h="100%">
-      <ChakraLink as={ReactRouterLink} to="/patient">
-        Patient
-      </ChakraLink>
-      <ChakraLink as={ReactRouterLink} to="/doctor">
-        Doctor
-      </ChakraLink>
-      <ChakraLink as={ReactRouterLink} to="/visitor">
-        Visitor
-      </ChakraLink>
-      <ChakraLink as={ReactRouterLink} to="/admission">
-        Admission
-      </ChakraLink>
-      <ChakraLink as={ReactRouterLink} to="/admin">
-        Admin
-      </ChakraLink>
+    <Box px="32px">
+      <Hero />
+      <Team />
     </Box>
   );
 }

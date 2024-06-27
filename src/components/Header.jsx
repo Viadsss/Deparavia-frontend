@@ -12,8 +12,13 @@ import {
   DrawerHeader,
   DrawerContent,
   DrawerCloseButton,
+  Box,
+  Flex,
+  Image,
+  IconButton,
+  Heading,
+  Text,
 } from "@chakra-ui/react";
-import { Box, Flex, Image, IconButton, Heading } from "@chakra-ui/react";
 import Logo from "/DeparaviaLogo.png";
 import PropTypes from "prop-types";
 
@@ -51,6 +56,9 @@ export default function Header({ bg, borderColor }) {
         bg={bg}
         borderBottom="2px"
         borderBottomColor={borderColor}
+        position="sticky"
+        top="0"
+        zIndex="10"
       >
         <Flex
           as="nav"
@@ -71,7 +79,14 @@ export default function Header({ bg, borderColor }) {
               to="/"
               _hover={{ textDecoration: "none" }}
             >
-              <Heading size="md">DEPARAVIA</Heading>
+              <Heading size="md">
+                <Text as="span" color="green.400">
+                  DEPA
+                </Text>
+                <Text as="span" color="blue.400">
+                  RAVIA
+                </Text>
+              </Heading>
             </ChakraLink>
           </Flex>
           <Flex
@@ -107,9 +122,17 @@ export default function Header({ bg, borderColor }) {
               <ChakraLink
                 as={ReactRouterLink}
                 to="/"
+                onClick={onClose}
                 _hover={{ textDecoration: "none" }}
               >
-                <Heading size="md">DEPARAVIA</Heading>
+                <Heading size="md">
+                  <Text as="span" color="green.400">
+                    DEPA
+                  </Text>
+                  <Text as="span" color="blue.400">
+                    RAVIA
+                  </Text>
+                </Heading>
               </ChakraLink>
             </Flex>
           </DrawerHeader>
