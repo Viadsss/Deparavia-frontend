@@ -82,7 +82,7 @@ export default function Visitor() {
   };
 
   return (
-    <Box>
+    <Box p="32px">
       <Heading as="h2" mb="24px" maxWidth="900px" mx="auto">
         Visitor Form
       </Heading>

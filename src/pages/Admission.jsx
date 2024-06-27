@@ -13,7 +13,7 @@ export default function Admission() {
   const bgCard = useColorModeValue("white", "gray.800");
   const borderCard = useColorModeValue("gray.200", "gray.600");
   return (
-    <Box>
+    <Box p="32px">
       <Heading as="h2" textAlign="center" mb="24px">
         Admission
       </Heading>

@@ -32,7 +32,7 @@ export default function ReturningAdmissionForm() {
   };
 
   return (
-    <Box>
+    <Box p="32px">
       <Box mb="24px" maxWidth="900px" mx="auto">
         <Heading as="h2" mb="12px" textAlign={"center"}>
           Returning Patient Admission Form

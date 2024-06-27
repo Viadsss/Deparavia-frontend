@@ -35,7 +35,7 @@ export default function NewAdmissisonForm() {
   };
 
   return (
-    <Box>
+    <Box p="32px">
       <Box mb="24px" maxWidth="900px" mx="auto">
         <Heading as="h2" mb="12px" textAlign={"center"}>
           Patient Admission Form

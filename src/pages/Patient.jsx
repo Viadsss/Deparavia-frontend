@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PatientLoginForm from "../components/patient/PatientLoginForm";
 import PatientDashboard from "../components/patient/PatientDashBoard";
+import { Box } from "@chakra-ui/react";
 
 export default function Patient() {
   const [patientData, setPatientData] = useState(null);
@@ -10,7 +11,7 @@ export default function Patient() {
   };
 
   return (
-    <>
+    <Box p="32px">
       {patientData ? (
         <PatientDashboard
           patientData={patientData}
@@ -20,6 +21,6 @@ export default function Patient() {
       ) : (
         <PatientLoginForm setPatientData={setPatientData} />
       )}
-    </>
+    </Box>
   );
 }
