@@ -118,64 +118,75 @@ export default function Team() {
           flexWrap="wrap"
         >
           <Card
-            colorScheme="blue"
             w="300px"
+            h="250px"
             p="12px"
             display="flex"
-            justifyContent="center"
-            alignItems="center"
+            flexDir="column"
+            justifyContent="space-between"
           >
-            <Avatar size="lg" src="/home/Dela Cruz.jpg" />
-            <Text fontWeight="bold">Jhana Mae Dela Cruz</Text>
-            <Text>Role Here</Text>
+            <Flex justifyContent="center" alignItems="center" flexDir="column">
+              <Avatar size="lg" src="/home/Dela Cruz.jpg" />
+              <Text fontWeight="bold">Jhana Mae Dela Cruz</Text>
+              <Text>Project Manager / Database Developer</Text>
+            </Flex>
             <Text color="gray.400">
-              Medical specialization dealing with the diagnosis, treatment and
-              prevention of poisoning.
+              Manages overall project tasks, including database development, and
+              coordinates team efforts.
             </Text>
           </Card>
           <Card
             w="300px"
+            h="250px"
             p="12px"
             display="flex"
-            justifyContent="center"
-            alignItems="center"
+            flexDir="column"
+            justifyContent="space-between"
           >
-            <Avatar size="lg" src="" />
-            <Text fontWeight="bold">Hazel Ann Pangilinan</Text>
-            <Text>Role Here</Text>
+            <Flex justifyContent="center" alignItems="center" flexDir="column">
+              <Avatar size="lg" src="" />
+              <Text fontWeight="bold">Hazel Ann Pangilinan</Text>
+              <Text>Database & Backend Developer</Text>
+            </Flex>
             <Text color="gray.400">
-              Medical specialization dealing with the diagnosis, treatment and
-              prevention of poisoning.
+              Responsible for designing, developing, and maintaining databases
+              and backend functionalities.
             </Text>
           </Card>
           <Card
             w="300px"
+            h="250px"
             p="12px"
             display="flex"
-            justifyContent="center"
-            alignItems="center"
+            flexDir="column"
+            justifyContent="space-between"
           >
-            <Avatar size="lg" src="" />
-            <Text fontWeight="bold">Kaye Regala</Text>
-            <Text>Role Here</Text>
+            <Flex justifyContent="center" alignItems="center" flexDir="column">
+              <Avatar size="lg" src="" />
+              <Text fontWeight="bold">Kaye Regala</Text>
+              <Text>Database & Backend Developer</Text>
+            </Flex>
             <Text color="gray.400">
-              Medical specialization dealing with the diagnosis, treatment and
-              prevention of poisoning.
+              Responsible for designing, developing, and maintaining databases
+              and backend functionalities.
             </Text>
           </Card>
           <Card
             w="300px"
+            h="250px"
             p="12px"
             display="flex"
-            justifyContent="center"
-            alignItems="center"
+            flexDir="column"
+            justifyContent="space-between"
           >
-            <Avatar size="lg" name="John Paul Viado" src="/home/Viado.jpg" />
-            <Text fontWeight="bold">John Paul Viado</Text>
-            <Text>Lead Programmer</Text>
+            <Flex justifyContent="center" alignItems="center" flexDir="column">
+              <Avatar size="lg" src="/home/Viado.jpg" />
+              <Text fontWeight="bold">John Paul Viado</Text>
+              <Text>Lead Programmer / Full-Stack Developer</Text>
+            </Flex>
             <Text color="gray.400">
-              Medical specialization dealing with the diagnosis, treatment and
-              prevention of poisoning.
+              Leads and oversees all aspects of development and responsible for
+              architecting the application&apos;s frontend.
             </Text>
           </Card>
         </Flex>
