@@ -33,7 +33,7 @@ export default function PatientRowDetails({ data }) {
       <Box>
         <strong>Diagnosis:</strong>
         <Text whiteSpace="preserve-breaks" marginLeft="1.5rem">
-          {data.diaagnosis ? data.diagnosis : "No Diagnosis"}
+          {data.diagnosis ? data.diagnosis : "No Diagnosis"}
         </Text>
       </Box>
       <Text>

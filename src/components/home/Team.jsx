@@ -111,84 +111,105 @@ export default function Team() {
         <Heading size="3xl">Group 9</Heading>
         <Flex
           textAlign="center"
-          justifyContent="space-evenly"
+          justifyContent="center"
           alignItems="center"
           gap="32px"
           mt="64px"
           flexWrap="wrap"
+          w="100%"
         >
-          <Card
-            w="300px"
-            h="250px"
-            p="12px"
-            display="flex"
-            flexDir="column"
-            justifyContent="space-between"
-          >
-            <Flex justifyContent="center" alignItems="center" flexDir="column">
-              <Avatar size="lg" src="/home/Dela Cruz.jpg" />
-              <Text fontWeight="bold">Jhana Mae Dela Cruz</Text>
-              <Text>Project Manager / Database Developer</Text>
-            </Flex>
-            <Text color="gray.400">
-              Manages overall project tasks, including database development, and
-              coordinates team efforts.
-            </Text>
-          </Card>
-          <Card
-            w="300px"
-            h="250px"
-            p="12px"
-            display="flex"
-            flexDir="column"
-            justifyContent="space-between"
-          >
-            <Flex justifyContent="center" alignItems="center" flexDir="column">
-              <Avatar size="lg" src="" />
-              <Text fontWeight="bold">Hazel Ann Pangilinan</Text>
-              <Text>Database & Backend Developer</Text>
-            </Flex>
-            <Text color="gray.400">
-              Responsible for designing, developing, and maintaining databases
-              and backend functionalities.
-            </Text>
-          </Card>
-          <Card
-            w="300px"
-            h="250px"
-            p="12px"
-            display="flex"
-            flexDir="column"
-            justifyContent="space-between"
-          >
-            <Flex justifyContent="center" alignItems="center" flexDir="column">
-              <Avatar size="lg" src="" />
-              <Text fontWeight="bold">Kaye Regala</Text>
-              <Text>Database & Backend Developer</Text>
-            </Flex>
-            <Text color="gray.400">
-              Responsible for designing, developing, and maintaining databases
-              and backend functionalities.
-            </Text>
-          </Card>
-          <Card
-            w="300px"
-            h="250px"
-            p="12px"
-            display="flex"
-            flexDir="column"
-            justifyContent="space-between"
-          >
-            <Flex justifyContent="center" alignItems="center" flexDir="column">
-              <Avatar size="lg" src="/home/Viado.jpg" />
-              <Text fontWeight="bold">John Paul Viado</Text>
-              <Text>Lead Programmer / Full-Stack Developer</Text>
-            </Flex>
-            <Text color="gray.400">
-              Leads and oversees all aspects of development and responsible for
-              architecting the application&apos;s frontend.
-            </Text>
-          </Card>
+          <Flex justifyContent="space-evenly" gap="32px" flexWrap="wrap">
+            <Card
+              w="300px"
+              h="250px"
+              p="12px"
+              display="flex"
+              flexDir="column"
+              justifyContent="space-between"
+            >
+              <Flex
+                justifyContent="center"
+                alignItems="center"
+                flexDir="column"
+              >
+                <Avatar size="lg" src="/home/Dela Cruz.jpg" />
+                <Text fontWeight="bold">Jhana Mae Dela Cruz</Text>
+                <Text>Project Manager / Database Developer</Text>
+              </Flex>
+              <Text color="gray.400">
+                Manages overall project tasks, including database development,
+                and coordinates team efforts.
+              </Text>
+            </Card>
+            <Card
+              w="300px"
+              h="250px"
+              p="12px"
+              display="flex"
+              flexDir="column"
+              justifyContent="space-between"
+            >
+              <Flex
+                justifyContent="center"
+                alignItems="center"
+                flexDir="column"
+              >
+                <Avatar size="lg" src="/home/Hazel.jpg" />
+                <Text fontWeight="bold">Hazel Ann Pangilinan</Text>
+                <Text>Database & Backend Developer</Text>
+              </Flex>
+              <Text color="gray.400">
+                Responsible for designing, developing, and maintaining databases
+                and backend functionalities.
+              </Text>
+            </Card>
+          </Flex>
+          <Flex justifyContent="space-evenly" gap="32px" flexWrap="wrap">
+            <Card
+              w="300px"
+              h="250px"
+              p="12px"
+              display="flex"
+              flexDir="column"
+              justifyContent="space-between"
+            >
+              <Flex
+                justifyContent="center"
+                alignItems="center"
+                flexDir="column"
+              >
+                <Avatar size="lg" src="/home/Kaye.jpg" />
+                <Text fontWeight="bold">Kaye Regala</Text>
+                <Text>Database & Backend Developer</Text>
+              </Flex>
+              <Text color="gray.400">
+                Responsible for designing, developing, and maintaining databases
+                and backend functionalities.
+              </Text>
+            </Card>
+            <Card
+              w="300px"
+              h="250px"
+              p="12px"
+              display="flex"
+              flexDir="column"
+              justifyContent="space-between"
+            >
+              <Flex
+                justifyContent="center"
+                alignItems="center"
+                flexDir="column"
+              >
+                <Avatar size="lg" src="/home/Viado.jpg" />
+                <Text fontWeight="bold">John Paul Viado</Text>
+                <Text>Lead Programmer / Full-Stack Developer</Text>
+              </Flex>
+              <Text color="gray.400">
+                Leads and oversees all aspects of development and responsible
+                for architecting the application&apos;s frontend.
+              </Text>
+            </Card>
+          </Flex>
         </Flex>
       </Flex>
     </Flex>

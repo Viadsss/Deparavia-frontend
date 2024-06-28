@@ -108,7 +108,7 @@ export default function Hero() {
         {heroDesigns}
       </Box>
       <Flex flex="2" flexDir="column" justifyContent="center" gap="16px">
-        <Heading size="4xl">{logo}</Heading>
+        <Heading size={{ base: "3xl", md: "4xl" }}>{logo}</Heading>
         <Text color="gray.400">Medical care for everyone</Text>
         <Flex
           gap="12px"
