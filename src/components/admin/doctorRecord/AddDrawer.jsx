@@ -139,16 +139,6 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
   );
 }
 
-// const addDoctorSimulate = async () => {
-//   await new Promise((resolve) => setTimeout(resolve, 2000));
-
-//   const mockData = {
-//     data: doctorRowsInsert,
-//     message: "get admissions successfully",
-//   };
-//   return mockData;
-// };
-
 const toastDetails = {
   success: {
     title: "Doctor Added",

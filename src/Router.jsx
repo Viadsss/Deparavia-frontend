@@ -8,6 +8,7 @@ import ReturningAdmissionForm from "./components/admission/returning/ReturningAd
 import Admin from "./pages/Admin";
 import Visitor from "./pages/Visitor";
 import Doctor from "./pages/Doctor";
+import Problems from "./pages/Problems";
 
 export default function Router() {
   const router = createBrowserRouter([
@@ -23,6 +24,7 @@ export default function Router() {
         { path: "admission/new", element: <NewAdmissisonForm /> },
         { path: "admission/returning", element: <ReturningAdmissionForm /> },
         { path: "admin", element: <Admin /> },
+        { path: "problems", element: <Problems /> },
       ],
       errorElement: <div>Error Page</div>,
     },

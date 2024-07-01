@@ -45,6 +45,9 @@ export default function Header({ bg, borderColor }) {
       <ChakraLink as={ReactRouterLink} to="/admin" onClick={onClose}>
         Admin
       </ChakraLink>
+      <ChakraLink as={ReactRouterLink} to="/problems" onClick={onClose}>
+        Problems
+      </ChakraLink>
     </>
   );
 
