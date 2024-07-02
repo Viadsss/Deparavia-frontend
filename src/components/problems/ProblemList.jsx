@@ -44,8 +44,8 @@ export default function ProblemList({
 }
 
 ProblemList.propTypes = {
-  number: PropTypes.string.isRequired,
-  toastDesc: PropTypes.elementType.isRequired,
+  number: PropTypes.number.isRequired,
+  toastDesc: PropTypes.object.isRequired,
   onClickDisplay: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };

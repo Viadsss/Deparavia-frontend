@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import ProblemList from "../components/problems/ProblemList";
-import Output1 from "../components/problems/Output1";
+import Output4 from "../components/problems/Output4";
 
 export default function Problems() {
   const bgCard = useColorModeValue("white", "gray.800");
@@ -25,10 +25,9 @@ export default function Problems() {
   const [modalContent, setModalContent] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  function onClickDisplay1() {
-    console.log("Hello World!");
-    setModalTitle("Output 1");
-    setModalContent(<Output1 />);
+  function onClickDisplay4() {
+    setModalTitle("Output 4");
+    setModalContent(<Output4 />);
     onOpen();
   }
 
@@ -48,14 +47,17 @@ export default function Problems() {
           mx="auto"
         >
           <OrderedList>
+            <Heading size="md">Simple</Heading>
+            <Heading size="md">Moderate</Heading>
             <ProblemList
-              number={1}
-              toastDesc={toastDesc1}
-              onClickDisplay={onClickDisplay1}
+              number={4}
+              toastDesc={toastDesc4}
+              onClickDisplay={onClickDisplay4}
             >
-              Display the average weight of patients grouped by their marital
-              status
+              Display the marital statuses of patients where there are more than
+              5 patients in each status
             </ProblemList>
+            <Heading size="md">Difficult</Heading>
           </OrderedList>
         </Box>
       </Box>
@@ -72,11 +74,13 @@ export default function Problems() {
   );
 }
 
-const toastDesc1 = {
+const toastDesc4 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column">
-      <Text>SELECT * adsda sda dadsa da da da sda das dasda d</Text>
-      <Text>SELECT *</Text>
+    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
+      <Text>SELECT maritalStatus, COUNT(*) as patientCount</Text>
+      <Text>FROM patient</Text>
+      <Text>GROUP BY maritalStatus</Text>
+      <Text>HAVING patientCount {">"} 5</Text>
     </Flex>
   ),
 };

@@ -1,10 +1,9 @@
 import { Text, useColorModeValue } from "@chakra-ui/react";
 import axios from "axios";
-import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 
-export default function Output1() {
+export default function Output4() {
   const [isPending, setIsPending] = useState(true);
   const [data, setData] = useState([]);
   const theme = useColorModeValue("chakraLight", "chakraDark");
@@ -15,9 +14,8 @@ export default function Output1() {
 
   const getData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8080/api/admin/visitors"
-      );
+      const response = await axios.get("http://localhost:8080/api/problem/4");
+      console.log(response.data);
       setData(response.data);
     } catch (err) {
       console.error(err.response.data);
@@ -29,7 +27,7 @@ export default function Output1() {
   return (
     <DataTable
       theme={theme}
-      columns={visitorColumns}
+      columns={columns}
       data={data}
       progressPending={isPending}
       pagination
@@ -40,10 +38,10 @@ export default function Output1() {
       expandableRowsComponent={({ data }) => (
         <>
           <Text>
-            <b>visitorID:</b> {data.visitorID}
+            <b>maritalStatus:</b> {data.maritalStatus}
           </Text>
           <Text>
-            <b>visitorDate:</b> {format(data.visitorDate, "yyyy-MM-dd")}
+            <b>patientCount:</b> {data.patientCount}
           </Text>
         </>
       )}
@@ -51,26 +49,11 @@ export default function Output1() {
   );
 }
 
-const visitorColumns = [
-  { name: "Visitor ID", selector: (row) => row.visitorID, sortable: true },
+const columns = [
   {
-    name: "Patient ID",
-    selector: (row) => row.patientID,
+    name: "maritalStatus",
+    selector: (row) => row.maritalStatus,
     sortable: true,
   },
-  {
-    name: "Date of Visit",
-    selector: (row) => format(row.visitorDate, "yyyy-MM-dd"),
-    sortable: true,
-  },
-  {
-    name: "Visitor Name",
-    selector: (row) => row.visitorName,
-    sortable: true,
-  },
-  {
-    name: "Relationship",
-    selector: (row) => row.visitorRelationship,
-  },
-  { name: "Contact Number", selector: (row) => row.visitorContactNumber },
+  { name: "patientCount", selector: (row) => row.patientCount, sortable: true },
 ];
