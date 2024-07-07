@@ -45,6 +45,7 @@ export default function EmergencyInfo({
     if (hasError) return;
 
     const updatedFormData = { ...formData, ...emergencyFormData };
+    console.log(updatedFormData);
     setFormData(updatedFormData);
     try {
       const response = await axios.post(

@@ -18,12 +18,10 @@ const initNewAdmissionForm = {
   emergencyName: "",
   emergencyRelationship: "",
   emergencyContactNumber: "",
-  password: "",
 };
 
 const initReturningAdmissionForm = {
   patientID: "",
-  password: "",
   complaints: "",
   medications: "",
 };
@@ -89,7 +87,7 @@ const initDoctorForm = {
   doctorStartTime: "",
   doctorEndTime: "",
   doctorStatus: "A",
-};  
+};
 
 const initDoctorShiftForm = {
   doctorStartTime: "",
