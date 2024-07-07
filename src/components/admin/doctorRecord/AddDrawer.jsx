@@ -119,7 +119,7 @@ export default function AddDrawer({ isOpen, onClose, handleDoctorUpdate }) {
               <Input
                 type="time"
                 name="doctorEndTime"
-                value={formData.doctorEndime}
+                value={formData.doctorEndTime}
                 onChange={handleChange}
               />
             </FormControl>
