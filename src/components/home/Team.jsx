@@ -179,7 +179,7 @@ export default function Team() {
                 flexDir="column"
               >
                 <Avatar size="lg" src="/home/Kaye.jpg" />
-                <Text fontWeight="bold">Kaye Regala</Text>
+                <Text fontWeight="bold">Ler Iseah Kaye Regala</Text>
                 <Text>Database & Backend Developer</Text>
               </Flex>
               <Text color="gray.400">
