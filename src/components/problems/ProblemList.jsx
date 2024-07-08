@@ -1,4 +1,4 @@
-import { Button, Flex, ListItem, Text, useToast } from "@chakra-ui/react";
+import { Flex, IconButton, ListItem, Text, useToast } from "@chakra-ui/react";
 import { IconEyeCode, IconTableShortcut } from "@tabler/icons-react";
 import PropTypes from "prop-types";
 
@@ -14,30 +14,30 @@ export default function ProblemList({
     <ListItem mb="16px">
       <Text>{children}</Text>
       <Flex flexWrap="wrap" gap="4px">
-        <Button
+        <IconButton
+          icon={<IconTableShortcut />}
           onClick={onClickDisplay}
-          leftIcon={<IconTableShortcut />}
-          size="sm"
+          size="xs"
           colorScheme="green"
         >
           Display
-        </Button>
-        <Button
-          leftIcon={<IconEyeCode />}
+        </IconButton>
+        <IconButton
+          icon={<IconEyeCode />}
           onClick={() =>
             toast({
               title: `SQL Code: Problem ${number}`,
               ...toastDesc,
               status: "info",
-              duration: 15000,
+              duration: 5000,
               isClosable: true,
             })
           }
-          size="sm"
+          size="xs"
           colorScheme="blue"
         >
           Show Code
-        </Button>
+        </IconButton>
       </Flex>
     </ListItem>
   );

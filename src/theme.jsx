@@ -2,6 +2,7 @@ import { extendTheme } from "@chakra-ui/react";
 import "@fontsource/geist-sans";
 import "@fontsource/geist-mono";
 import "@fontsource-variable/lexend";
+import "@fontsource-variable/roboto-mono";
 
 const light = {
   text: {
@@ -124,7 +125,7 @@ const theme = extendTheme({
   fonts: {
     heading: `'Lexend Variable', sans-serif`,
     body: `'Lexend Variable', sans-serif`,
-    monospace: `'Geist mono', monospace`,
+    monospace: `'Roboto Mono Variable', monospace`,
   },
   initialColorMode: "light",
   useSystemColorMode: false,

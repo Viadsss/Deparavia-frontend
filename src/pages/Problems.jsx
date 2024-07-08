@@ -145,8 +145,8 @@ export default function Problems() {
               toastDesc={toastDesc4}
               onClickDisplay={onClickDisplay4}
             >
-              Display the marital statuses of patients where there are more than
-              5 patients in each status
+              Display the marital statuses with more than 5 patients, along with
+              the number of patients for each status.
             </ProblemList>
 
             <ProblemList
@@ -154,8 +154,8 @@ export default function Problems() {
               toastDesc={toastDesc5}
               onClickDisplay={onClickDisplay5}
             >
-              Display the visitor relationships where there are more than 3
-              visits in each category.
+              Display the visitor relationships and its total visits where there
+              are more than 3 visits in each category.
             </ProblemList>
 
             <ProblemList
@@ -164,7 +164,7 @@ export default function Problems() {
               onClickDisplay={onClickDisplay6}
             >
               Display the average weight of patients grouped by city and ordered
-              by average weight in descending order, but only include ciies
+              by average weight in descending order, but only include cities
               where the average weight is greater than 70
             </ProblemList>
 
@@ -186,8 +186,8 @@ export default function Problems() {
               onClickDisplay={onClickDisplay8}
             >
               Display the visitor&apos;s name of female patients, including
-              their total visit, only include the visitors that visits more than
-              3 visits.
+              their total visit in descending order, only include the visitors
+              that have more than 2 visits.
             </ProblemList>
 
             <ProblemList
@@ -195,9 +195,10 @@ export default function Problems() {
               toastDesc={toastDesc9}
               onClickDisplay={onClickDisplay9}
             >
-              Display the patients&apos; names, the total number of their
-              admissions, and the most recent admission date. Only include
-              patients who have been admitted more than twice.
+              Display the patients&apos; ID and their names, the total number of
+              their admissions, and the most recent admission date. Only include
+              patients who have been admitted more than once and sort them in
+              descending order.
             </ProblemList>
 
             <ProblemList
@@ -205,9 +206,10 @@ export default function Problems() {
               toastDesc={toastDesc10}
               onClickDisplay={onClickDisplay10}
             >
-              Retrieve the doctor names and the average number of days their
-              patients stay admitted, only for doctors with an average stay
-              duration greater than 5 days.
+              Display the patients&apos; ID and their names, the total number of
+              their admissions, and the most recent admission date. Only include
+              patients who have been admitted more than once and sort them in
+              descending order.
             </ProblemList>
           </OrderedList>
         </Box>
@@ -227,117 +229,248 @@ export default function Problems() {
 
 const toastDesc1 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
-      <Text>SELECT patientID, firstName, lastName</Text>
-      <Text>FROM patient</Text>
+    <Flex
+      flexWrap="wrap"
+      flexDir="column"
+      fontFamily="Roboto Mono Variable"
+      fontWeight={400}
+    >
+      <Text>
+        <b>SELECT</b> patientID, firstName, lastName
+      </Text>
+      <Text>
+        <b>FROM</b> patient;
+      </Text>
     </Flex>
   ),
 };
 
 const toastDesc2 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
-      <Text>SELECT doctorName, doctorStartTime</Text>
-      <Text>FROM doctor</Text>
-      <Text>WHERE doctorStartTime {"<"} &apos;09:00:00&apos;</Text>
+    <Flex
+      flexWrap="wrap"
+      flexDir="column"
+      fontFamily="Roboto Mono Variable"
+      fontWeight={400}
+    >
+      <Text>
+        <b>SELECT</b> doctorName, doctorStartTime
+      </Text>
+      <Text>
+        <b>FROM</b> doctor
+      </Text>
+      <Text>
+        <b>WHERE</b> doctorStartTime {"<"} &apos;09:00:00&apos;;
+      </Text>
     </Flex>
   ),
 };
 
 const toastDesc3 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
-      <Text>SELECT *</Text>
-      <Text>FROM patient</Text>
-      <Text>WHERE city = &apos;Quezon City&apos;</Text>
-      <Text>ORDER BY lastname</Text>
+    <Flex
+      flexWrap="wrap"
+      flexDir="column"
+      fontFamily="Roboto Mono Variable"
+      fontWeight={400}
+    >
+      <Text>
+        <b>SELECT</b> *
+      </Text>
+      <Text>
+        <b>FROM</b> patient
+      </Text>
+      <Text>
+        <b>WHERE</b> city = &apos;Quezon City&apos;
+      </Text>
+      <Text>
+        <b>ORDER BY</b> lastname;
+      </Text>
     </Flex>
   ),
 };
 
 const toastDesc4 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
-      <Text>SELECT maritalStatus, COUNT(*) as patientCount</Text>
-      <Text>FROM patient</Text>
-      <Text>GROUP BY maritalStatus</Text>
-      <Text>HAVING patientCount {">"} 5</Text>
+    <Flex
+      flexWrap="wrap"
+      flexDir="column"
+      fontFamily="Roboto Mono Variable"
+      fontWeight={400}
+    >
+      <Text>
+        <b>SELECT</b> maritalStatus, COUNT(*) as patientCount
+      </Text>
+      <Text>
+        <b>FROM</b> patient
+      </Text>
+      <Text>
+        <b>GROUP</b> BY maritalStatus
+      </Text>
+      <Text>
+        <b>HAVING</b> patientCount {">"} 5;
+      </Text>
     </Flex>
   ),
 };
 
 const toastDesc5 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
-      <Text>SELECT visitorRelationship, COUNT(*) as visitorCount</Text>
-      <Text>FROM visitor</Text>
-      <Text>GROUP BY visitorRelationship</Text>
-      <Text>HAVING visitorCount {">"} 3</Text>
+    <Flex
+      flexWrap="wrap"
+      flexDir="column"
+      fontFamily="Roboto Mono Variable"
+      fontWeight={400}
+    >
+      <Text>
+        <b>SELECT</b> visitorRelationship, COUNT(*) as visitorCount
+      </Text>
+      <Text>
+        <b>FROM</b> visitor
+      </Text>
+      <Text>
+        <b>GROUP</b> BY visitorRelationship
+      </Text>
+      <Text>
+        <b>HAVING</b> visitorCount {">"} 3;
+      </Text>
     </Flex>
   ),
 };
 
 const toastDesc6 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
-      <Text>SELECT city, AVG(weight) AS avg_weight</Text>
-      <Text>FROM patient</Text>
-      <Text>GROUP BY city</Text>
-      <Text>HAVING AVG(weight) {">"} 70</Text>
+    <Flex
+      flexWrap="wrap"
+      flexDir="column"
+      fontFamily="Roboto Mono Variable"
+      fontWeight={400}
+    >
+      <Text>
+        <b>SELECT</b> city, AVG(weight) AS avg_weight
+      </Text>
+      <Text>
+        <b>FROM</b> patient
+      </Text>
+      <Text>
+        <b>GROUP</b> BY city
+      </Text>
+      <Text>
+        <b>HAVING</b> AVG(weight) {">"} 70;
+      </Text>
     </Flex>
   ),
 };
 
 const toastDesc7 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
-      <Text>SELECT city, COUNT(*) as patientCount</Text>
-      <Text>FROM patient</Text>
-      <Text>GROUP BY city</Text>
-      <Text>HAVING COUNT(*) {">"} 1</Text>
+    <Flex
+      flexWrap="wrap"
+      flexDir="column"
+      fontFamily="Roboto Mono Variable"
+      fontWeight={400}
+    >
+      <Text>
+        <b>SELECT</b> city, COUNT(*) as patientCount
+      </Text>
+      <Text>
+        <b>FROM</b> patient
+      </Text>
+      <Text>
+        <b>GROUP</b> BY city
+      </Text>
+      <Text>
+        <b>HAVING</b> COUNT(*) {">"} 1;
+      </Text>
     </Flex>
   ),
 };
 
 const toastDesc8 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
-      <Text>SELECT v.visitorName, COUNT(*) AS total_visits</Text>
-      <Text>FROM visitor v, patient p</Text>
-      <Text>WHERE p.patientID = v.patientID AND p.sex = &apos;F&apos;</Text>
-      <Text>GROUP BY v.visitorName</Text>
-      <Text> HAVING total_visits {">"} 3</Text>
+    <Flex
+      flexWrap="wrap"
+      flexDir="column"
+      fontFamily="Roboto Mono Variable"
+      fontWeight={400}
+    >
+      <Text>
+        <b>SELECT</b> v.visitorName, COUNT(*) AS total_visits
+      </Text>
+      <Text>
+        <b>FROM</b> visitor v, patient p
+      </Text>
+      <Text>
+        <b>WHERE</b> p.patientID = v.patientID AND p.sex = &apos;F&apos;
+      </Text>
+      <Text>
+        <b>GROUP</b> BY v.visitorName
+      </Text>
+      <Text>
+        <b>HAVING</b> total_visits {">"} 2;
+      </Text>
+      <Text>
+        <b>ORDER BY</b> total_visits DESC;
+      </Text>
     </Flex>
   ),
 };
 
 const toastDesc9 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
-      <Text>
-        SELECT p.patientID, p.firstName, p.lastName, COUNT(a.admissionID) AS
-        total_admissions,MAX(a.admissionDate) AS most_recent_admission
+    <Flex
+      flexWrap="wrap"
+      flexDir="column"
+      fontFamily="Roboto Mono Variable"
+      fontWeight={400}
+    >
+      <Text paddingLeft={"20px"} textIndent={"-20px"}>
+        <b>SELECT</b> p.patientID, p.firstName, p.lastName, COUNT(a.admissionID)
+        AS total_admissions,MAX(a.admissionDate) AS most_recent_admission
       </Text>
-      <Text>FROM patient p, admission a</Text>
-      <Text>WHERE p.patientID = a.patientID</Text>
-      <Text>GROUP BY p.patientID, p.firstName, p.lastName</Text>
-      <Text>HAVING COUNT(a.admissionID) {">"} 2</Text>
-      <Text>ORDER BY total_admissions DESC</Text>
+      <Text>
+        <b>FROM</b> patient p, admission a
+      </Text>
+      <Text>
+        <b>WHERE</b> p.patientID = a.patientID
+      </Text>
+      <Text>
+        <b>GROUP</b> BY p.patientID, p.firstName, p.lastName
+      </Text>
+      <Text>
+        <b>HAVING</b> COUNT(a.admissionID) {">"} 1
+      </Text>
+      <Text>
+        <b>ORDER BY</b> total_admissions DESC;
+      </Text>
     </Flex>
   ),
 };
 
 const toastDesc10 = {
   description: (
-    <Flex flexWrap="wrap" flexDir="column" fontFamily="Geist Mono">
-      <Text>
-        SELECT d.doctorName, AVG(DATEDIFF(a.dischargeDate, a.admissionDate)) AS
-        avgStayDuration
+    <Flex
+      flexWrap="wrap"
+      flexDir="column"
+      fontFamily="Roboto Mono Variable"
+      fontWeight={400}
+    >
+      <Text paddingLeft={"20px"} textIndent={"-20px"}>
+        <b>SELECT</b> d.doctorName, AVG(DATEDIFF(a.dischargeDate,
+        a.admissionDate)) AS avgStayDuration
       </Text>
-      <Text>FROM doctor d, admission a</Text>
-      <Text>WHERE d.doctorID = a.doctorID AND a.dischargeDate IS NOT NULL</Text>
-      <Text>GROUP BY d.doctorID, d.doctorName</Text>
-      <Text>HAVING avgStayDuration {">"} 5</Text>
+      <Text>
+        <b>FROM</b> doctor d, admission a
+      </Text>
+      <Text paddingLeft={"20px"} textIndent={"-20px"}>
+        <b>WHERE</b> d.doctorID = a.doctorID AND a.dischargeDate IS NOT NULL
+      </Text>
+      <Text>
+        <b>GROUP</b> BY d.doctorID, d.doctorName
+      </Text>
+      <Text>
+        <b>HAVING</b> avgStayDuration {">"} 1.5;
+      </Text>
     </Flex>
   ),
 };

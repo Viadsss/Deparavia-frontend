@@ -1,5 +1,6 @@
 import { Text, useColorModeValue } from "@chakra-ui/react";
 import axios from "axios";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 
@@ -50,7 +51,8 @@ export default function Output9() {
             <b>total_admissions:</b> {data.total_admissions}
           </Text>
           <Text>
-            <b>most_recent_admission:</b> {data.most_recent_admission}
+            <b>most_recent_admission:</b>{" "}
+            {format(data.most_recent_admission, "yyyy-MM-dd")}
           </Text>
         </>
       )}
@@ -81,7 +83,7 @@ const columns = [
   },
   {
     name: "most_recent_admission",
-    selector: (row) => row.most_recent_admission,
+    selector: (row) => format(row.most_recent_admission, "yyyy-MM-dd"),
     sortable: true,
   },
 ];
