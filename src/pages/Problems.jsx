@@ -305,7 +305,7 @@ const toastDesc4 = {
         <b>FROM</b> patient
       </Text>
       <Text>
-        <b>GROUP</b> BY maritalStatus
+        <b>GROUP BY</b> maritalStatus
       </Text>
       <Text>
         <b>HAVING</b> patientCount {">"} 5;
@@ -329,7 +329,7 @@ const toastDesc5 = {
         <b>FROM</b> visitor
       </Text>
       <Text>
-        <b>GROUP</b> BY visitorRelationship
+        <b>GROUP BY</b> visitorRelationship
       </Text>
       <Text>
         <b>HAVING</b> visitorCount {">"} 3;
@@ -353,7 +353,7 @@ const toastDesc6 = {
         <b>FROM</b> patient
       </Text>
       <Text>
-        <b>GROUP</b> BY city
+        <b>GROUP BY</b> city
       </Text>
       <Text>
         <b>HAVING</b> AVG(weight) {">"} 70;
@@ -377,7 +377,7 @@ const toastDesc7 = {
         <b>FROM</b> patient
       </Text>
       <Text>
-        <b>GROUP</b> BY city
+        <b>GROUP BY</b> city
       </Text>
       <Text>
         <b>HAVING</b> COUNT(*) {">"} 1;
@@ -404,7 +404,7 @@ const toastDesc8 = {
         <b>WHERE</b> p.patientID = v.patientID AND p.sex = &apos;F&apos;
       </Text>
       <Text>
-        <b>GROUP</b> BY v.visitorName
+        <b>GROUP BY</b> v.visitorName
       </Text>
       <Text>
         <b>HAVING</b> total_visits {">"} 2;
@@ -435,7 +435,7 @@ const toastDesc9 = {
         <b>WHERE</b> p.patientID = a.patientID
       </Text>
       <Text>
-        <b>GROUP</b> BY p.patientID, p.firstName, p.lastName
+        <b>GROUP BY</b> p.patientID, p.firstName, p.lastName
       </Text>
       <Text>
         <b>HAVING</b> COUNT(a.admissionID) {">"} 1
@@ -466,7 +466,7 @@ const toastDesc10 = {
         <b>WHERE</b> d.doctorID = a.doctorID AND a.dischargeDate IS NOT NULL
       </Text>
       <Text>
-        <b>GROUP</b> BY d.doctorID, d.doctorName
+        <b>GROUP BY</b> d.doctorID, d.doctorName
       </Text>
       <Text>
         <b>HAVING</b> avgStayDuration {">"} 1.5;
