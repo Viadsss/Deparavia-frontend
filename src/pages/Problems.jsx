@@ -206,10 +206,10 @@ export default function Problems() {
               toastDesc={toastDesc10}
               onClickDisplay={onClickDisplay10}
             >
-              Display the patients&apos; ID and their names, the total number of
-              their admissions, and the most recent admission date. Only include
-              patients who have been admitted more than once and sort them in
-              descending order.
+              Retrieve the doctors&apos; ID and their respective names and the
+              average number of days their patients stay admitted, only for
+              doctors with an average stay duration greater than 1 and a half
+              days.
             </ProblemList>
           </OrderedList>
         </Box>
@@ -456,7 +456,7 @@ const toastDesc10 = {
       fontWeight={400}
     >
       <Text paddingLeft={"20px"} textIndent={"-20px"}>
-        <b>SELECT</b> d.doctorName, AVG(DATEDIFF(a.dischargeDate,
+        <b>SELECT</b> d.doctorID, d.doctorName, AVG(DATEDIFF(a.dischargeDate,
         a.admissionDate)) AS avgStayDuration
       </Text>
       <Text>

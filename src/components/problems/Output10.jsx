@@ -38,6 +38,9 @@ export default function Output10() {
       expandableRowsComponent={({ data }) => (
         <>
           <Text>
+            <b>doctorID:</b> {data.doctorID}
+          </Text>
+          <Text>
             <b>doctorName:</b> {data.doctorName}
           </Text>
           <Text>
@@ -50,14 +53,19 @@ export default function Output10() {
 }
 
 const columns = [
-    {
-      name: "doctorName",
-      selector: (row) => row.doctorName,
-      sortable: true,
-    },
-    {
-      name: "avgStayDuration",
-      selector: (row) => row.avgStayDuration,
-      sortable: true,
-    },
-  ];
+  {
+    name: "doctorID",
+    selector: (row) => row.doctorID,
+    sortable: true,
+  },
+  {
+    name: "doctorName",
+    selector: (row) => row.doctorName,
+    sortable: true,
+  },
+  {
+    name: "avgStayDuration",
+    selector: (row) => row.avgStayDuration,
+    sortable: true,
+  },
+];
