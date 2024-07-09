@@ -407,7 +407,7 @@ const toastDesc8 = {
         <b>GROUP BY</b> v.visitorName
       </Text>
       <Text>
-        <b>HAVING</b> total_visits {">"} 2;
+        <b>HAVING</b> total_visits {">"} 2
       </Text>
       <Text>
         <b>ORDER BY</b> total_visits DESC;
